@@ -9,6 +9,7 @@ const BASE_URL = 'http://localhost:3003/api'
 const INITIAL_VALUES = {efetivoDescricao: ''}
 
 export const GET_OPES = 'GET_OPES'
+export const GET_TIPOS_OPES = 'GET_TIPOS_OPES'
 export const GET_COUNT = 'GET_COUNT'
 export const UPDATE_EFETIVO_DESC = 'UPDATE_EFETIVO_DESC'
 export const UPDATE_TIPO = 'UPDATE_TIPO'
@@ -19,6 +20,14 @@ export function getList() {
     const request = axios.get(`${BASE_URL}/opes`)
     return {
         type: GET_OPES,
+        payload: request
+    }
+}
+
+export function getTiposOpes() {
+    const request = axios.get(`${BASE_URL}/tiposOpes`)
+    return {
+        type: GET_TIPOS_OPES,
         payload: request
     }
 }
@@ -103,6 +112,7 @@ export function init() {
         showTabs('tabList', 'tabCreate'),
         selectTab('tabList'),
         getList(),
+        getTiposOpes(),
         initialize('opeForm', INITIAL_VALUES)
     ]
 }

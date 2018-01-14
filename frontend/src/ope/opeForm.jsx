@@ -19,28 +19,14 @@ import LabelAndSelect from '../common/form/labelAndSelect'
 class OpeForm extends Component {
 
 
-    tipos = [
-        'GUARDA DE HONRA',
-        'GUARDA FÚNEBRE',
-        'EVENTO ESPORTIVO'
-
-    ]
+    
     prioridades = [
         'OBRIGATÓRIA',
         'PARCIAL',
         'DE ACORDO COM A DEMANDA'
     ]
 
-    tiposDetalhes = [
-        {
-            nome: 'GUARDA DE HONRA',
-            descricao: 'descricao guarda de honra'
-        },
-        {
-            nome: 'GUARDA FÚNEBRE',
-            descricao: 'descricao guarda funebre'
-        }
-    ]
+   
 
     componentDidMount() {
         const { getCount, tabUpdate, tabDelete, missaoTipo } = this.props
@@ -74,8 +60,8 @@ class OpeForm extends Component {
 
 
     render() {
-        const { handleSubmit, readOnly } = this.props
-
+        const { handleSubmit, readOnly, tiposOpes } = this.props
+        const tiposNomes = tiposOpes.map((tipo) => tipo.nome)
 
 
         return (
@@ -92,7 +78,7 @@ class OpeForm extends Component {
                         label='Data da Missão' cols='12 3' placeholder='Informe a data da missão' />
 
                     <Field name='missaoTipo' component={LabelAndSelect} readOnly={readOnly}
-                        label='Tipo' cols='12 3' placeholder='Selecione um tipo!' itens={this.tipos} onChange={this.updateTipo} />
+                        label='Tipo' cols='12 3' placeholder='Selecione um tipo!' itens={tiposNomes} onChange={this.updateTipo} />
 
                     <Field name='missaoDescricao' component={LabelAndTextArea} readOnly={readOnly}
                         label='Missão Descrição' cols='12' placeholder='Informe uma descrição' />
@@ -132,7 +118,8 @@ const selector = formValueSelector('opeForm')
 const mapStateToProps = state => ({
     missaoTipo: selector(state, 'missaoTipo'),
     tabUpdate: state.tab.visible.tabUpdate,
-    tabDelete: state.tab.visible.tabDelete
+    tabDelete: state.tab.visible.tabDelete,
+    tiposOpes: state.ope.tiposOpes
 
 
 })
