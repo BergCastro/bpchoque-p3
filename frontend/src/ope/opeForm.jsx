@@ -4,11 +4,12 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { reduxForm, Field, formValueSelector } from 'redux-form'
 
-import {    init, 
-            updateEfetivoDescricao, 
-            getCount, 
-            updateTipo,
-        } from './opeActions'
+import {
+    init,
+    updateEfetivoDescricao,
+    getCount,
+    updateTipo,
+} from './opeActions'
 import LabelAndInput from '../common/form/labelAndInput'
 import LabelAndTextArea from '../common/form/labelAndTextArea'
 import LabelAndEditTextArea from './labelAndEditTextArea'
@@ -22,7 +23,12 @@ class OpeForm extends Component {
         'GUARDA DE HONRA',
         'GUARDA FÚNEBRE',
         'EVENTO ESPORTIVO'
-    
+
+    ]
+    prioridades = [
+        'OBRIGATÓRIA',
+        'PARCIAL',
+        'DE ACORDO COM A DEMANDA'
     ]
 
     tiposDetalhes = [
@@ -36,34 +42,34 @@ class OpeForm extends Component {
         }
     ]
 
-    componentDidMount(){
+    componentDidMount() {
         const { getCount, tabUpdate, tabDelete, missaoTipo } = this.props
-        if(!tabUpdate && !tabDelete)
+        if (!tabUpdate && !tabDelete)
             getCount()
-        
-        
+
+
     }
 
 
     updateEfetivo = (value) => {
-        
+
         this.props.updateEfetivoDescricao(value)
 
     }
 
     updateTipo = (event) => {
-        const { getCount, tabUpdate, tabDelete, missaoTipo , updateTipo} = this.props 
+        const { getCount, tabUpdate, tabDelete, missaoTipo, updateTipo } = this.props
         const value = event.target.value
         //const result = this.tiposDetalhes.filter((tipo) => tipo.nome == value)
         //console.log('result: '+JSON.stringify(result))
         updateTipo(value)
-        if(!tabUpdate && !tabDelete)
+        if (!tabUpdate && !tabDelete)
             getCount()
-        
+
 
     }
 
-    
+
 
 
 
@@ -76,15 +82,18 @@ class OpeForm extends Component {
 
             <form onSubmit={handleSubmit}>
                 <div className='box-body'>
-                    <Field name='numero'  component={LabelAndInput} readOnly={readOnly}
-                        label='Número' cols='12 4'  />
+                    <Field name='numero' component={LabelAndInput} readOnly={readOnly}
+                        label='Número' cols='12 3' />
+
+                    <Field name='prioridade' component={LabelAndSelect} readOnly={readOnly}
+                        label='Prioridade' cols='12 3' placeholder='Selecione uma prioridade!' itens={this.prioridades}  />
 
                     <Field name='dataMissao' component={LabelAndInput} readOnly={readOnly}
-                        label='Data da Missão' cols='12 4' placeholder='Informe a data da missão' />
-                    
+                        label='Data da Missão' cols='12 3' placeholder='Informe a data da missão' />
+
                     <Field name='missaoTipo' component={LabelAndSelect} readOnly={readOnly}
-                        label='Tipo' cols='12 4' placeholder='Selecione um tipo!' itens={this.tipos} onChange={this.updateTipo}/>
-                    
+                        label='Tipo' cols='12 3' placeholder='Selecione um tipo!' itens={this.tipos} onChange={this.updateTipo} />
+
                     <Field name='missaoDescricao' component={LabelAndTextArea} readOnly={readOnly}
                         label='Missão Descrição' cols='12' placeholder='Informe uma descrição' />
 
@@ -124,13 +133,13 @@ const mapStateToProps = state => ({
     missaoTipo: selector(state, 'missaoTipo'),
     tabUpdate: state.tab.visible.tabUpdate,
     tabDelete: state.tab.visible.tabDelete
-    
+
 
 })
-const mapDispatchToProps = dispatch => bindActionCreators({ 
-    init, 
-    updateEfetivoDescricao, 
-    getCount, 
-    updateTipo 
- }, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators({
+    init,
+    updateEfetivoDescricao,
+    getCount,
+    updateTipo
+}, dispatch)
 export default connect(mapStateToProps, mapDispatchToProps)(OpeForm)
