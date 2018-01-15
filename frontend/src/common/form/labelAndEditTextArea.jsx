@@ -11,17 +11,17 @@ class LabelAndEditTextArea extends React.Component {
     }
 
     onChange = (value) => {
-        const { updateEfetivo } = this.props
+        const { updateValor } = this.props
 
         this.setState({value})
-        updateEfetivo(value.toString('html'))
+        updateValor(value.toString('html'))
         
         
     }
     
     componentWillMount(){
-        const { efetivoDescricao } = this.props
-        this.setState({value: RichTextEditor.createValueFromString(efetivoDescricao, 'html')})
+        const { valor } = this.props
+        this.setState({value: RichTextEditor.createValueFromString(valor, 'html')})
     }
     render() {
         
@@ -63,7 +63,7 @@ class LabelAndEditTextArea extends React.Component {
 
 }
 
-const mapStateToProps = state => ({ efetivoDescricao: state.form.opeForm.values.efetivoDescricao })
 
 
-export default connect(mapStateToProps, null)(LabelAndEditTextArea)
+
+export default LabelAndEditTextArea

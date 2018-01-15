@@ -14,9 +14,7 @@ import {
   UPDATE_EFETIVO_DESC, GET_COUNT,
   UPDATE_TIPO, UPDATE_SUGESTOES
 } from '../ope/opeActions'
-import {
-  UPDATE_EFETIVO_DESC_SUGES
-} from '../tipoOpe/tipoOpeActions'
+
 
 
 const rootReducer = combineReducers({
@@ -38,7 +36,27 @@ const rootReducer = combineReducers({
               efetivoDescricao: undefined // <----- clear field state, too (touched, etc.)
             }
           }
-       
+
+        case UPDATE_SUGESTOES:
+          return {
+            ...state,
+            values: {
+              ...state.values,
+              ref: action.payload.referencia,
+              missaoDescricao: action.payload.missaoDescricao,
+              local: action.payload.local,
+              horaQuartel: action.payload.horaQuartel,
+              horaLocal: action.payload.horaLocal,
+              equipamento: action.payload.equipamento,
+              observacoes: action.payload.prescricoes,
+              efetivoDescricao: action.payload.efetivoDescricao
+              // <----- clear password value
+            },
+            registeredFields: {
+              ...state.registeredFields,
+
+            }
+          }
         case UPDATE_TIPO:
           return {
             ...state,
@@ -69,31 +87,7 @@ const rootReducer = combineReducers({
           return state
       }
     }
-  },
-    {
-      tipoOpeForm: (state, action) => {   // <----- 'login' is name of form given to reduxForm()
-        switch (action.type) {
-         
-          case UPDATE_EFETIVO_DESC_SUGES:
-            return {
-              ...state,
-              values: {
-                ...state.values,
-                efetivoDescricao: action.payload,
-
-              },
-              registeredFields: {
-                ...state.registeredFields,
-                efetivoDescricao: undefined // <----- clear field state, too (touched, etc.)
-              }
-            }
-
-          
-          default:
-            return state
-        }
-      }
-    }),
+  }),
   toastr: toastrReducer,
   auth: AuthReducer,
   prova: ProvaReducer,

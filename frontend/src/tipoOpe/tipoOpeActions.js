@@ -10,7 +10,7 @@ const INITIAL_VALUES = {efetivoDescricao: ''}
 
 export const GET_COUNT_TIPOS = 'GET_COUNT_TIPOS'
 export const GET_TIPOS_OPES = 'GET_TIPOS_OPES'
-export const UPDATE_EFETIVO_DESC_SUGES = 'UPDATE_EFETIVO_DESC_SUGES'
+export const UPDATE_EFETIVO_DESC_TIPO = 'UPDATE_EFETIVO_DESC_TIPO'
 
 export function getList() {
     const request = axios.get(`${BASE_URL}/tiposOpes`)
@@ -31,7 +31,7 @@ export function getCount() {
 export function updateEfetivoDescricao(value) {
 
     return {
-            type: UPDATE_EFETIVO_DESC_SUGES,
+            type: UPDATE_EFETIVO_DESC_TIPO,
             payload: value
     }
 }

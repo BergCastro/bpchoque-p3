@@ -6,7 +6,16 @@ import { showTabs, selectTab } from '../common/tab/tabActions'
 
 
 const BASE_URL = 'http://localhost:3003/api'
-const INITIAL_VALUES = {efetivoDescricao: ''}
+const INITIAL_VALUES = {
+    efetivoDescricao: '',
+    ref: '',
+    missaoDescricao: '',
+    local: '',
+    horaQuartel: '',
+    horaLocal: '',
+    equipamento: '',
+    observacoes: ''
+}
 
 export const GET_OPES = 'GET_OPES'
 export const GET_TIPOS_OPES = 'GET_TIPOS_OPES'

@@ -7,7 +7,7 @@ import { reduxForm, Field, formValueSelector } from 'redux-form'
 import { init, getCount, updateEfetivoDescricao } from './tipoOpeActions'
 import LabelAndInput from '../common/form/labelAndInput'
 import LabelAndTextArea from '../common/form/labelAndTextArea'
-import LabelAndEditTextArea from './labelAndEditTextArea'
+import LabelAndEditTextArea from '../common/form/labelAndEditTextArea'
 import LabelAndSelect from '../common/form/labelAndSelect'
 
 
@@ -21,7 +21,7 @@ class TipoOpeForm extends Component {
 
 
     updateEfetivo = (value) => {
-
+        console.log('valor: '+value)
         this.props.updateEfetivoDescricao(value)
 
     }
@@ -29,7 +29,7 @@ class TipoOpeForm extends Component {
 
 
     render() {
-        const { handleSubmit, readOnly } = this.props
+        const { handleSubmit, readOnly , efetivoDescricao} = this.props
 
 
 
@@ -39,13 +39,13 @@ class TipoOpeForm extends Component {
                 <div className='box-body'>
 
                     <Field name='nome' component={LabelAndInput} readOnly={readOnly}
-                        label='Nome' cols='12 6' placeholder='Informe um nome' />
+                        label='Nome' cols='12' placeholder='Informe um nome' />
 
-                    <Field name='referencia' component={LabelAndInput} readOnly={readOnly}
-                        label='Referência/Determinação' cols='12 6' placeholder='Informe uma referência' />
+                    <Field name='referencia' component={LabelAndTextArea} readOnly={readOnly}
+                        label='Referência/Determinação' cols='12' placeholder='Informe uma referência' />
 
-                    <Field name='local' component={LabelAndInput} readOnly={readOnly}
-                        label='Local da Missão:' cols='12 6' placeholder='Informe uma referência' />
+                    <Field name='local' component={LabelAndTextArea} readOnly={readOnly}
+                        label='Local da Missão:' cols='12' placeholder='Informe uma referência' />
 
                     <Field name='missaoDescricao' component={LabelAndTextArea} readOnly={readOnly}
                         label='Missão Descrição' cols='12' placeholder='Informe uma descrição' />
@@ -58,7 +58,7 @@ class TipoOpeForm extends Component {
 
             
                     <Field name='efetivoDescricao' component={LabelAndEditTextArea} readOnly={readOnly}
-                        label='Efetivo' cols='12' placeholder='Informe a descrição do efetivo' updateEfetivo={this.updateEfetivo} />
+                        label='Efetivo' cols='12' placeholder='Informe a descrição do efetivo' updateValor={this.updateEfetivo} valor={efetivoDescricao}/>
 
                     <Field name='equipamento' component={LabelAndTextArea} readOnly={readOnly}
                         label='Equipamento' cols='12' placeholder='Informe o efetivo' />
@@ -84,6 +84,7 @@ TipoOpeForm = reduxForm({ form: 'tipoOpeForm', destroyOnUnmount: false })(TipoOp
 const selector = formValueSelector('tipoOpeForm')
 const mapStateToProps = state => ({
     missaoTipo: selector(state, 'missaoTipo'),
+    efetivoDescricao: selector(state, 'efetivoDescricao'),
     tabUpdate: state.tab.visible.tabUpdate,
     tabDelete: state.tab.visible.tabDelete
 

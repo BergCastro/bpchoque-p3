@@ -9,10 +9,11 @@ import {
     updateEfetivoDescricao,
     getCount,
     updateTipo,
+    updateSugestoes
 } from './opeActions'
 import LabelAndInput from '../common/form/labelAndInput'
 import LabelAndTextArea from '../common/form/labelAndTextArea'
-import LabelAndEditTextArea from './labelAndEditTextArea'
+import LabelAndEditTextArea from '../common/form/labelAndEditTextArea'
 import LabelAndSelect from '../common/form/labelAndSelect'
 
 
@@ -44,13 +45,17 @@ class OpeForm extends Component {
     }
 
     updateTipo = (event) => {
-        const { getCount, tabUpdate, tabDelete, missaoTipo, updateTipo } = this.props
+        const { getCount, tabUpdate, tabDelete, missaoTipo, updateTipo, updateSugestoes, tiposOpes } = this.props
         const value = event.target.value
         //const result = this.tiposDetalhes.filter((tipo) => tipo.nome == value)
         //console.log('result: '+JSON.stringify(result))
         updateTipo(value)
-        if (!tabUpdate && !tabDelete)
-            getCount()
+        if (!tabUpdate && !tabDelete){
+            const tipoOpe = tiposOpes.filter((tipo) => tipo.nome === value)
+            console.log('tipoOPe: '+JSON.stringify(tipoOpe[0]))
+            updateSugestoes(tipoOpe[0])
+        }
+           
 
 
     }
@@ -60,7 +65,7 @@ class OpeForm extends Component {
 
 
     render() {
-        const { handleSubmit, readOnly, tiposOpes } = this.props
+        const { handleSubmit, readOnly, tiposOpes, efetivoDescricao } = this.props
         const tiposNomes = tiposOpes.map((tipo) => tipo.nome)
 
 
@@ -80,24 +85,30 @@ class OpeForm extends Component {
                     <Field name='missaoTipo' component={LabelAndSelect} readOnly={readOnly}
                         label='Tipo' cols='12 3' placeholder='Selecione um tipo!' itens={tiposNomes} onChange={this.updateTipo} />
 
-                    <Field name='missaoDescricao' component={LabelAndTextArea} readOnly={readOnly}
-                        label='Missão Descrição' cols='12' placeholder='Informe uma descrição' />
-
                     <Field name='ref' component={LabelAndTextArea} readOnly={readOnly}
                         label='Referência/Determinação' cols='12' placeholder='Informe de quem foi a determinação' />
 
+                    <Field name='missaoDescricao' component={LabelAndTextArea} readOnly={readOnly}
+                        label='Missão Descrição' cols='12' placeholder='Informe uma descrição' />
+
                     <Field name='local' component={LabelAndTextArea} readOnly={readOnly}
-                        label='Local' cols='12 8' placeholder='Informe o local da missão' />
+                        label='Local' cols='12' placeholder='Informe o local da missão' />
 
                     <Field name='horaQuartel' component={LabelAndInput} readOnly={readOnly}
-                        label='Horário Saída' cols='12 2' placeholder='Horário Saída' />
+                        label='Horário Saída' cols='12 6' placeholder='Horário Saída' />
 
                     <Field name='horaLocal' component={LabelAndInput} readOnly={readOnly}
-                        label='Horário no Local' cols='12 2' placeholder='Horário no Local' />
+                        label='Horário no Local' cols='12 6' placeholder='Horário no Local' />
 
 
                     <Field name='efetivoDescricao' component={LabelAndEditTextArea} readOnly={readOnly}
-                        label='Efetivo' cols='12' placeholder='Informe a descrição do efetivo' updateEfetivo={this.updateEfetivo} />
+                        label='Efetivo' cols='12' placeholder='Informe a descrição do efetivo' updateValor={this.updateEfetivo} valor={efetivoDescricao}/>
+                    
+                    <Field name='equipamento' component={LabelAndTextArea} readOnly={readOnly}
+                        label='Armamento/Equipamento' cols='12' placeholder='Informe o equipamento para a missão' />
+                    
+                    <Field name='observacoes' component={LabelAndTextArea} readOnly={readOnly}
+                        label='Prescrições Diversas' cols='12' placeholder='Informe as prescrições para a missão' />
 
                 </div>
                 <div className='box-footer'>
@@ -117,6 +128,7 @@ OpeForm = reduxForm({ form: 'opeForm', destroyOnUnmount: false })(OpeForm)
 const selector = formValueSelector('opeForm')
 const mapStateToProps = state => ({
     missaoTipo: selector(state, 'missaoTipo'),
+    efetivoDescricao: selector(state, 'efetivoDescricao'),
     tabUpdate: state.tab.visible.tabUpdate,
     tabDelete: state.tab.visible.tabDelete,
     tiposOpes: state.ope.tiposOpes
@@ -127,6 +139,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     init,
     updateEfetivoDescricao,
     getCount,
-    updateTipo
+    updateTipo,
+    updateSugestoes
 }, dispatch)
 export default connect(mapStateToProps, mapDispatchToProps)(OpeForm)

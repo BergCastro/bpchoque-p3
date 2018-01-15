@@ -21,7 +21,7 @@ class OpeList extends Component {
             <tr key={ope._id}>
                 <td>{ope.numero}</td>
                 <td>{this.formatDate(ope.data)}</td>
-                <td>{ope.ref}</td>
+                <td>{ope.missaoTipo}</td>
                 <td>
                     <button className='btn btn-warning' onClick={() => this.props.showUpdate(ope)}>
                         <i className='fa fa-pencil'></i>
@@ -42,7 +42,7 @@ class OpeList extends Component {
                         <tr>
                             <th>Número</th>
                             <th>Data</th>
-                            <th>Referência</th>
+                            <th>Tipo</th>
                             <th className='table-actions'>Ações</th>
                         </tr>
                     </thead>
