@@ -9,7 +9,7 @@ import Row from '../common/layout/row'
 import Grid from '../common/layout/grid'
 import Messages from '../common/msg/messages'
 import Input from '../common/form/inputAuth'
-import logo from './img/logo-def.png'
+//import logo from './img/logo-def.png'
 
 class Auth extends Component {
     constructor(props) {

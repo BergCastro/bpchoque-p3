@@ -8,7 +8,7 @@ import { init, getCount, updateEfetivoDescricao } from './tipoOpeActions'
 import LabelAndInput from '../common/form/labelAndInput'
 import LabelAndTextArea from '../common/form/labelAndTextArea'
 import LabelAndEditTextArea from '../common/form/labelAndEditTextArea'
-import LabelAndSelect from '../common/form/labelAndSelect'
+
 
 
 class TipoOpeForm extends Component {

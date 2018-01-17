@@ -1,35 +1,26 @@
 import React from 'react'
-import Grid from '../layout/grid'
+import { connect } from 'react-redux'
+import Grid from '../common/layout/grid'
 import RichTextEditor from 'react-rte'
+import { formValueSelector } from 'redux-form'
 
 
 class LabelAndEditTextArea extends React.Component {
 
-    state = {
-        value: RichTextEditor.createEmptyValue()
-    }
+ 
 
     onChange = (value) => {
         const { updateValor } = this.props
 
-        this.setState({value})
-        updateValor(value.toString('html'))
+    
+        updateValor(value)
         
         
-    }
-    //o value não está rederizando o componente pois a mudança de estado está dentro
-    //componentwillmount (que já está montado)
-    componentWillMount(){
-        const { valor } = this.props
-       this.setState({value: RichTextEditor.createValueFromString(valor, 'html')})
-    }
-    render() {
-       const { value } = this.state
-       
-       console.log('valor: '+this.props.valor)
-        console.log('value: '+value.toString('html'))
-        
+   }
+    
 
+    render() {
+  
         const toolbarConfig = {
             // Optionally specify the groups to display (displayed in the order listed).
             display: ['INLINE_STYLE_BUTTONS', 'BLOCK_TYPE_BUTTONS', 'LINK_BUTTONS', 'BLOCK_TYPE_DROPDOWN', 'HISTORY_BUTTONS'],
@@ -59,7 +50,8 @@ class LabelAndEditTextArea extends React.Component {
                 <div className='form-group'>
                     <label htmlFor={name}>{label}</label>
                     <RichTextEditor name={name}
-                        value={this.state.value}
+                        //value={this.state.value}
+                        value={this.props.efetivoDescricao}
                         onChange={this.onChange} toolbarConfig={toolbarConfig}
                         readOnly={readOnly} />
                 </div>
@@ -69,7 +61,11 @@ class LabelAndEditTextArea extends React.Component {
 
 }
 
+const selector = formValueSelector('opeForm')
+const mapStateToProps = state => ({
+   
+    efetivoDescricao: selector(state, 'efetivoDescricao')
 
+})
 
-
-export default LabelAndEditTextArea
+export default connect(mapStateToProps, null)(LabelAndEditTextArea)

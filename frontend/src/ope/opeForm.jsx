@@ -13,7 +13,7 @@ import {
 } from './opeActions'
 import LabelAndInput from '../common/form/labelAndInput'
 import LabelAndTextArea from '../common/form/labelAndTextArea'
-import LabelAndEditTextArea from '../common/form/labelAndEditTextArea'
+import LabelAndEditTextArea from './labelAndEditTextArea'
 import LabelAndSelect from '../common/form/labelAndSelect'
 
 
@@ -29,8 +29,8 @@ class OpeForm extends Component {
 
    
 
-    componentDidMount() {
-        const { getCount, tabUpdate, tabDelete, missaoTipo } = this.props
+    componentWillMount() {
+        const {  tabUpdate, tabDelete, getCount } = this.props
         if (!tabUpdate && !tabDelete)
             getCount()
 
@@ -45,14 +45,13 @@ class OpeForm extends Component {
     }
 
     updateTipo = (event) => {
-        const { getCount, tabUpdate, tabDelete, missaoTipo, updateTipo, updateSugestoes, tiposOpes } = this.props
+        const { tabUpdate, tabDelete, updateTipo, updateSugestoes, tiposOpes } = this.props
         const value = event.target.value
-        //const result = this.tiposDetalhes.filter((tipo) => tipo.nome == value)
-        //console.log('result: '+JSON.stringify(result))
+        
         updateTipo(value)
         if (!tabUpdate && !tabDelete){
             const tipoOpe = tiposOpes.filter((tipo) => tipo.nome === value)
-            console.log('tipoOPe: '+JSON.stringify(tipoOpe[0]))
+            
             updateSugestoes(tipoOpe[0])
         }
            
@@ -65,8 +64,9 @@ class OpeForm extends Component {
 
 
     render() {
-        const { handleSubmit, readOnly, tiposOpes, efetivoDescricao } = this.props
+        const { handleSubmit, readOnly, tiposOpes } = this.props
         const tiposNomes = tiposOpes.map((tipo) => tipo.nome)
+        
 
 
         return (
@@ -102,7 +102,7 @@ class OpeForm extends Component {
 
 
                     <Field name='efetivoDescricao' component={LabelAndEditTextArea} readOnly={readOnly}
-                        label='Efetivo' cols='12' placeholder='Informe a descrição do efetivo' updateValor={this.updateEfetivo} valor={efetivoDescricao}/>
+                        label='Efetivo' cols='12' placeholder='Informe a descrição do efetivo' updateValor={this.updateEfetivo} />
                     
                     <Field name='equipamento' component={LabelAndTextArea} readOnly={readOnly}
                         label='Armamento/Equipamento' cols='12' placeholder='Informe o equipamento para a missão' />

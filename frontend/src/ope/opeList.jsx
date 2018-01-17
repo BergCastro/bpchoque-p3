@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { getList, showUpdate, showDelete } from './opeActions'
+import sortBy from 'sort-by'
 
 class OpeList extends Component {
 
@@ -17,7 +18,8 @@ class OpeList extends Component {
 
     renderRows() {
         const list = this.props.list || []
-        return list.map(ope => (
+        const listByNumero = list.sort(sortBy('-numero'))
+        return listByNumero.map(ope => (
             <tr key={ope._id}>
                 <td>{ope.numero}</td>
                 <td>{this.formatDate(ope.data)}</td>

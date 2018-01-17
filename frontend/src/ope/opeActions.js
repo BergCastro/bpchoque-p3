@@ -2,19 +2,22 @@ import axios from 'axios'
 import { toastr } from 'react-redux-toastr'
 import { initialize } from 'redux-form'
 import { showTabs, selectTab } from '../common/tab/tabActions'
+import RichTextEditor from 'react-rte'
+
 
 
 
 const BASE_URL = 'http://localhost:3003/api'
 const INITIAL_VALUES = {
-    efetivoDescricao: '',
+    efetivoDescricao: RichTextEditor.createEmptyValue(),
     ref: '',
     missaoDescricao: '',
     local: '',
     horaQuartel: '',
     horaLocal: '',
     equipamento: '',
-    observacoes: ''
+    observacoes: '',
+    numero: '',
 }
 
 export const GET_OPES = 'GET_OPES'
@@ -88,8 +91,10 @@ export function remove(values) {
 
 function submit(values, method) {
     return dispatch => {
+        const valores = {...values,
+                        efetivoDescricao: values.efetivoDescricao.toString('html')}
         const id = values._id ? values._id : ''
-        axios[method](`${BASE_URL}/opes/${id}`, values)
+        axios[method](`${BASE_URL}/opes/${id}`, valores)
             .then(resp => {
                 toastr.success('Sucesso', 'Operação Realizada com sucesso.')
                 dispatch(init())
@@ -101,18 +106,22 @@ function submit(values, method) {
 }
 
 export function showUpdate(ope) {
+    const opeValue = {...ope,
+    efetivoDescricao: RichTextEditor.createValueFromString(ope.efetivoDescricao, 'html')}
     return [ 
         showTabs('tabUpdate'),
         selectTab('tabUpdate'),
-        initialize('opeForm', ope)
+        initialize('opeForm', opeValue)
     ]
 }
 
 export function showDelete(ope) {
+    const opeValue = {...ope,
+        efetivoDescricao: RichTextEditor.createValueFromString(ope.efetivoDescricao, 'html')}
     return [ 
         showTabs('tabDelete'),
         selectTab('tabDelete'),
-        initialize('opeForm', ope)
+        initialize('opeForm', opeValue)
     ]
 }
 
