@@ -10,6 +10,7 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, list: action.payload.data }
         case GET_TIPOS_OPES:
             return { ...state, tiposOpes: action.payload.data }
+        
        
 
 

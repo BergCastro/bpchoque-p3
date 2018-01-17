@@ -33,10 +33,9 @@ class OpeForm extends Component {
       }
    
 
-    componentWillMount() {
-        const {  tabUpdate, tabDelete, getCount, efetivoDescricao } = this.props
-        if (!tabUpdate && !tabDelete)
-            getCount()
+    componentDidMount() {
+        const {  efetivoDescricao } = this.props
+       
 
         this.setState({ value: RichTextEditor.createValueFromString(efetivoDescricao, 'html')})
 
@@ -139,8 +138,8 @@ const selector = formValueSelector('opeForm')
 const mapStateToProps = state => ({
     missaoTipo: selector(state, 'missaoTipo'),
     efetivoDescricao: selector(state, 'efetivoDescricao'),
-    tabUpdate: state.tab.visible.tabUpdate,
-    tabDelete: state.tab.visible.tabDelete,
+    //tabUpdate: state.tab.visible.tabUpdate,
+   // tabDelete: state.tab.visible.tabDelete,
     tiposOpes: state.ope.tiposOpes
 
 

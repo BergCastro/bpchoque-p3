@@ -1,7 +1,6 @@
 const restful = require('node-restful')
 const mongoose = restful.mongoose
 const Schema = mongoose.Schema
-const uniqueValidator = require('mongoose-unique-validator')
 
 const tipos = [
     'GUARDA DE HONRA',
@@ -12,9 +11,9 @@ const tipos = [
 
 
 
-const opeSchema = new Schema({
-    numero: { type: Number, required: true, unique: true },
-    prioridade: {type: String, required: true},
+const geralSchema = new Schema({
+    comandante: { type: String, required: true },
+    subcomandante: { type: String, required: true },
     data: { type: Date,  required: true, default: Date.now() },
     ref: { type: String, required: true},
     missaoTipo: { type: String, required: true, enum: tipos},
@@ -29,5 +28,4 @@ const opeSchema = new Schema({
     observacoes: {type: String}   
 })
 
-opeSchema.plugin(uniqueValidator, { message: 'Erro, a OPE de número: {VALUE} já existe.' })
-module.exports = restful.model('Ope', opeSchema)
+module.exports = restful.model('Geral', geralSchema)

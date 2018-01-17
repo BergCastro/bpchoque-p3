@@ -15,13 +15,8 @@ class TipoOpeForm extends Component {
 
 
 
-
-
-
-
-
     updateEfetivo = (value) => {
-        console.log('valor: '+value)
+        
         this.props.updateEfetivoDescricao(value)
 
     }

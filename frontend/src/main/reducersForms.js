@@ -55,19 +55,21 @@ export default formReducer.plugin({
 
           }
         }
-
-      case GET_COUNT:
+        case GET_COUNT:
         return {
           ...state,
           values: {
             ...state.values,
-            numero: action.payload.data.value + 1 // <----- clear password value
+            numero: action.payload.data.value + 1
+            // <----- clear password value
           },
           registeredFields: {
             ...state.registeredFields,
-            efetivoDescricao: undefined // <----- clear field state, too (touched, etc.)
+
           }
         }
+
+     
       default:
         return state
     }

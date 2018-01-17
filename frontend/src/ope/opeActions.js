@@ -9,6 +9,7 @@ import { showTabs, selectTab } from '../common/tab/tabActions'
 
 const BASE_URL = 'http://localhost:3003/api'
 const INITIAL_VALUES = {
+    
     efetivoDescricao: '',
     ref: '',
     missaoDescricao: '',
@@ -17,7 +18,8 @@ const INITIAL_VALUES = {
     horaLocal: '',
     equipamento: '',
     observacoes: '',
-    numero: '',
+   
+    
 }
 
 export const GET_OPES = 'GET_OPES'
@@ -100,6 +102,7 @@ function submit(values, method) {
                 dispatch(init())
             })
             .catch(e => {
+                console.log('event: '+e)
                 e.response.data.errors.forEach(error => toastr.error('Erro', error))
             })
     }
@@ -126,11 +129,15 @@ export function showDelete(ope) {
 }
 
 export function init() {
+    //const numero = axios.get(`${BASE_URL}/opes/count`)
+    
     return [
         showTabs('tabList', 'tabCreate'),
         selectTab('tabList'),
         getList(),
         getTiposOpes(),
-        initialize('opeForm', INITIAL_VALUES)
+        initialize('opeForm', INITIAL_VALUES),
+        getCount()
+        
     ]
 }

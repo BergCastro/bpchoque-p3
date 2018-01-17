@@ -24,10 +24,9 @@ class LabelAndEditTextArea extends React.Component {
        this.setState({value: RichTextEditor.createValueFromString(valor, 'html')})
     }
     render() {
-       const { value } = this.state
        
-       console.log('valor: '+this.props.valor)
-        console.log('value: '+value.toString('html'))
+       
+       
         
 
         const toolbarConfig = {
