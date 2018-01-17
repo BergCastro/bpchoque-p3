@@ -15,6 +15,7 @@ import LabelAndInput from '../common/form/labelAndInput'
 import LabelAndTextArea from '../common/form/labelAndTextArea'
 import LabelAndEditTextArea from './labelAndEditTextArea'
 import LabelAndSelect from '../common/form/labelAndSelect'
+import RichTextEditor from 'react-rte'
 
 
 class OpeForm extends Component {
@@ -27,22 +28,22 @@ class OpeForm extends Component {
         'DE ACORDO COM A DEMANDA'
     ]
 
+    state = {
+        value: RichTextEditor.createEmptyValue()
+      }
    
 
     componentWillMount() {
-        const {  tabUpdate, tabDelete, getCount } = this.props
+        const {  tabUpdate, tabDelete, getCount, efetivoDescricao } = this.props
         if (!tabUpdate && !tabDelete)
             getCount()
 
+        this.setState({ value: RichTextEditor.createValueFromString(efetivoDescricao, 'html')})
 
     }
 
 
-    updateEfetivo = (value) => {
-
-        this.props.updateEfetivoDescricao(value)
-
-    }
+    
 
     updateTipo = (event) => {
         const { tabUpdate, tabDelete, updateTipo, updateSugestoes, tiposOpes } = this.props
@@ -53,14 +54,23 @@ class OpeForm extends Component {
             const tipoOpe = tiposOpes.filter((tipo) => tipo.nome === value)
             
             updateSugestoes(tipoOpe[0])
+            this.setState({value: RichTextEditor.createValueFromString(tipoOpe[0].efetivoDescricao, 'html')})
         }
            
 
 
     }
 
+   
 
+    onChange = (value) => {
+        this.setState({value})
+       
+        this.props.updateEfetivoDescricao(value.toString('html'))
+           
+   }
 
+   
 
 
     render() {
@@ -101,8 +111,8 @@ class OpeForm extends Component {
                         label='Horário no Local' cols='12 6' placeholder='Horário no Local' />
 
 
-                    <Field name='efetivoDescricao' component={LabelAndEditTextArea} readOnly={readOnly}
-                        label='Efetivo' cols='12' placeholder='Informe a descrição do efetivo' updateValor={this.updateEfetivo} />
+                    <LabelAndEditTextArea readOnly={readOnly}
+                        label='Efetivo' cols='12' placeholder='Informe a descrição do efetivo' valor={this.state.value} onChange={this.onChange}/>
                     
                     <Field name='equipamento' component={LabelAndTextArea} readOnly={readOnly}
                         label='Armamento/Equipamento' cols='12' placeholder='Informe o equipamento para a missão' />

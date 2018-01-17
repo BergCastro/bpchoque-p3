@@ -1,25 +1,17 @@
 import React from 'react'
-import { connect } from 'react-redux'
+
 import Grid from '../common/layout/grid'
 import RichTextEditor from 'react-rte'
-import { formValueSelector } from 'redux-form'
+
 
 
 class LabelAndEditTextArea extends React.Component {
 
- 
 
-    onChange = (value) => {
-        const { updateValor } = this.props
-
-    
-        updateValor(value)
-        
-        
-   }
     
 
     render() {
+        const { valor , onChange } = this.props
   
         const toolbarConfig = {
             // Optionally specify the groups to display (displayed in the order listed).
@@ -51,8 +43,8 @@ class LabelAndEditTextArea extends React.Component {
                     <label htmlFor={name}>{label}</label>
                     <RichTextEditor name={name}
                         //value={this.state.value}
-                        value={this.props.efetivoDescricao}
-                        onChange={this.onChange} toolbarConfig={toolbarConfig}
+                        value={valor}
+                        onChange={onChange} toolbarConfig={toolbarConfig}
                         readOnly={readOnly} />
                 </div>
             </Grid>
@@ -61,11 +53,6 @@ class LabelAndEditTextArea extends React.Component {
 
 }
 
-const selector = formValueSelector('opeForm')
-const mapStateToProps = state => ({
-   
-    efetivoDescricao: selector(state, 'efetivoDescricao')
 
-})
 
-export default connect(mapStateToProps, null)(LabelAndEditTextArea)
+export default LabelAndEditTextArea

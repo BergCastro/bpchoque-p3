@@ -11,7 +11,7 @@ import OpeReducer from '../ope/opeReducer'
 import TipoOpeReducer from '../tipoOpe/tipoOpeReducer'
 import AuthReducer from '../auth/authReducer'
 import reducersForms from './reducersForms'
-import { UPDATE_EFETIVO_DESC, UPDATE_SUGESTOES, UPDATE_TIPO, GET_COUNT } from '../ope/opeActions'
+
 
 
 

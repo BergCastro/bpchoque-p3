@@ -2,14 +2,14 @@ import axios from 'axios'
 import { toastr } from 'react-redux-toastr'
 import { initialize } from 'redux-form'
 import { showTabs, selectTab } from '../common/tab/tabActions'
-import RichTextEditor from 'react-rte'
+
 
 
 
 
 const BASE_URL = 'http://localhost:3003/api'
 const INITIAL_VALUES = {
-    efetivoDescricao: RichTextEditor.createEmptyValue(),
+    efetivoDescricao: '',
     ref: '',
     missaoDescricao: '',
     local: '',
@@ -91,10 +91,10 @@ export function remove(values) {
 
 function submit(values, method) {
     return dispatch => {
-        const valores = {...values,
-                        efetivoDescricao: values.efetivoDescricao.toString('html')}
+        //const valores = {...values,
+          //              efetivoDescricao: values.efetivoDescricao.toString('html')}
         const id = values._id ? values._id : ''
-        axios[method](`${BASE_URL}/opes/${id}`, valores)
+        axios[method](`${BASE_URL}/opes/${id}`, values)
             .then(resp => {
                 toastr.success('Sucesso', 'Operação Realizada com sucesso.')
                 dispatch(init())
@@ -106,22 +106,22 @@ function submit(values, method) {
 }
 
 export function showUpdate(ope) {
-    const opeValue = {...ope,
-    efetivoDescricao: RichTextEditor.createValueFromString(ope.efetivoDescricao, 'html')}
+    //const opeValue = {...ope,
+   //efetivoDescricao: RichTextEditor.createValueFromString(ope.efetivoDescricao, 'html')}
     return [ 
         showTabs('tabUpdate'),
         selectTab('tabUpdate'),
-        initialize('opeForm', opeValue)
+        initialize('opeForm', ope)
     ]
 }
 
 export function showDelete(ope) {
-    const opeValue = {...ope,
-        efetivoDescricao: RichTextEditor.createValueFromString(ope.efetivoDescricao, 'html')}
+    //const opeValue = {...ope,
+    //    efetivoDescricao: RichTextEditor.createValueFromString(ope.efetivoDescricao, 'html')}
     return [ 
         showTabs('tabDelete'),
         selectTab('tabDelete'),
-        initialize('opeForm', opeValue)
+        initialize('opeForm', ope)
     ]
 }
 

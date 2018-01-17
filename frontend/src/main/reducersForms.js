@@ -1,7 +1,7 @@
 import { UPDATE_EFETIVO_DESC, UPDATE_SUGESTOES, UPDATE_TIPO, GET_COUNT } from '../ope/opeActions'
 import { UPDATE_EFETIVO_DESC_TIPO } from '../tipoOpe/tipoOpeActions'
 import { reducer as formReducer } from 'redux-form'
-import RichTextEditor from 'react-rte'
+
 
 
 
@@ -13,7 +13,7 @@ export default formReducer.plugin({
           ...state,
           values: {
             ...state.values,
-            efetivoDescricao: action.payload // <----- clear password value
+            efetivoDescricao: action.payload  // <----- clear password value
           },
           registeredFields: {
             ...state.registeredFields,
@@ -32,7 +32,7 @@ export default formReducer.plugin({
             horaQuartel: action.payload.horaQuartel,
             horaLocal: action.payload.horaLocal,
             equipamento: action.payload.equipamento,
-            efetivoDescricao: RichTextEditor.createValueFromString(action.payload.efetivoDescricao, 'html'),
+            efetivoDescricao: action.payload.efetivoDescricao,
             observacoes: action.payload.prescricoes,
             
             // <----- clear password value
