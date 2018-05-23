@@ -17,7 +17,7 @@ const opeSchema = new Schema({
     prioridade: {type: String, required: true},
     data: { type: Date,  required: true, default: Date.now() },
     ref: { type: String, required: true},
-    missaoTipo: { type: String, required: true, enum: tipos},
+    missaoTipo: { type: String, required: true},
     missaoDescricao: { type: String, required: true} ,
     local: {type: String},
     dataMissao: {type: Date},
