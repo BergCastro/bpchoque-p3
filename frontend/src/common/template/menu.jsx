@@ -14,6 +14,8 @@ export default props => (
                 label="OPE's" icon='file-text' />
             <MenuItem path='tiposOpes'
                 label="Tipos de OPEs" icon='file-text' />
+             <MenuItem path='oficioAssuntos'
+                label="Assuntos de Ofício" icon='file-text' />
             
         </MenuTree>
        

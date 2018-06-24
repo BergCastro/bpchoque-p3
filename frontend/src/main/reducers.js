@@ -9,6 +9,7 @@ import ProvaReducer from '../prova/provaReducer'
 import TipoTesteReducer from '../tipoTeste/tipoTesteReducer'
 import OpeReducer from '../ope/opeReducer'
 import TipoOpeReducer from '../tipoOpe/tipoOpeReducer'
+import OficioAssuntosReducer from '../oficioAssuntos/oficioAssuntosReducer'
 import AuthReducer from '../auth/authReducer'
 import reducersForms from './reducersForms'
 
@@ -25,7 +26,8 @@ const rootReducer = combineReducers({
   prova: ProvaReducer,
   tipoTeste: TipoTesteReducer,
   ope: OpeReducer,
-  tipoOpe: TipoOpeReducer
+  tipoOpe: TipoOpeReducer,
+  oficioAssunto: OficioAssuntosReducer
 
 })
 
