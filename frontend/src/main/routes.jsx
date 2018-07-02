@@ -7,7 +7,8 @@ import Prova from '../prova/prova'
 import TipoTeste from '../tipoTeste/tipoTeste'
 import Ope from '../ope/ope'
 import TipoOpe from '../tipoOpe/tipoOpe'
-import OficioAssuntos from '../oficioAssuntos/oficioAssuntos'
+import TiposOficio from '../tiposOficio/tiposOficio'
+import Oficios from '../oficio/oficio'
 
 
 export default props => (
@@ -19,7 +20,8 @@ export default props => (
             <Route path='/tiposTeste' component={TipoTeste} />
             <Route path='/opes' component={Ope} />
             <Route path='/tiposOpes' component={TipoOpe} />
-            <Route path='/oficioAssuntos' component={OficioAssuntos} />
+            <Route path='/tiposOficio' component={TiposOficio} />
+            <Route path='/oficios' component={Oficios} />
             <Redirect from='*' to='/' />
         </Switch>
     </div>

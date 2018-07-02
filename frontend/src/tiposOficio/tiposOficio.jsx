@@ -9,12 +9,12 @@ import TabsHeader from '../common/tab/tabsHeader'
 import TabsContent from '../common/tab/tabsContent'
 import TabHeader from '../common/tab/tabHeader'
 import TabContent from '../common/tab/tabContent'
-import { init, create, update, remove } from './oficioAssuntosActions'
+import { init, create, update, remove } from './tiposOficioActions'
 
-import List from './oficioAssuntosList'
-import Form from './oficioAssuntosForm'
+import List from './tiposOficioList'
+import Form from './tiposOficioForm'
 
-class OficioAssuntos extends Component {
+class TiposOficio extends Component {
 
     componentWillMount() {
         this.props.init()
@@ -23,7 +23,7 @@ class OficioAssuntos extends Component {
     render() {
         return (
             <div>
-                <ContentHeader title="Assuntos de Ofícios" small='Cadastro' />
+                <ContentHeader title="Tipos de Ofícios" small='Cadastro' />
                 <Content>
                     <Tabs>
                         <TabsHeader>
@@ -59,4 +59,4 @@ class OficioAssuntos extends Component {
 const mapDispatchToProps = dispatch => bindActionCreators({
     init, create, update, remove
 }, dispatch)
-export default connect(null, mapDispatchToProps)(OficioAssuntos)
+export default connect(null, mapDispatchToProps)(TiposOficio)

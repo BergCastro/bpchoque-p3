@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { getList, showUpdate, showDelete } from './oficioAssuntosActions'
+import { getList, showUpdate, showDelete } from './oficioActions'
+import sortBy from 'sort-by'
 
-class OficioAssuntosList extends Component {
+class OficioList extends Component {
 
     componentWillMount() {
         this.props.getList()
@@ -17,14 +18,17 @@ class OficioAssuntosList extends Component {
 
     renderRows() {
         const list = this.props.list || []
-        return list.map(oficioAssunto => (
-            <tr key={oficioAssunto._id}>
-                <td>{oficioAssunto.nome}</td>
+        const listByNumero = list.sort(sortBy('-numero'))
+        return listByNumero.map(oficio => (
+            <tr key={oficio._id}>
+                <td>{oficio.numero}</td>
+                <td>{this.formatDate(oficio.data)}</td>
+                <td>{oficio.assunto}</td>
                 <td>
-                    <button className='btn btn-warning' onClick={() => this.props.showUpdate(oficioAssunto)}>
+                    <button className='btn btn-warning' onClick={() => this.props.showUpdate(oficio)}>
                         <i className='fa fa-pencil'></i>
                     </button>
-                    <button className='btn btn-danger' onClick={() => this.props.showDelete(oficioAssunto)}>
+                    <button className='btn btn-danger' onClick={() => this.props.showDelete(oficio)}>
                         <i className='fa fa-trash-o'></i>
                     </button>
                 </td>
@@ -38,8 +42,9 @@ class OficioAssuntosList extends Component {
                 <table className='table'>
                     <thead>
                         <tr>
-                            <th>Nome</th>
-                            
+                            <th>Número</th>
+                            <th>Data</th>
+                            <th>Tipo</th>
                             <th className='table-actions'>Ações</th>
                         </tr>
                     </thead>
@@ -52,6 +57,6 @@ class OficioAssuntosList extends Component {
     }
 }
 
-const mapStateToProps = state => ({list: state.oficioAssunto.list})
+const mapStateToProps = state => ({list: state.oficio.list})
 const mapDispatchToProps = dispatch => bindActionCreators({getList, showUpdate, showDelete}, dispatch)
-export default connect(mapStateToProps, mapDispatchToProps)(OficioAssuntosList)
+export default connect(mapStateToProps, mapDispatchToProps)(OficioList)

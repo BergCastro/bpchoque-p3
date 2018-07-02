@@ -10,19 +10,19 @@ const BASE_URL = 'http://localhost:3003/api'
 const INITIAL_VALUES = {efetivoDescricao: ''}
 
 export const GET_COUNT_TIPOS = 'GET_COUNT_TIPOS'
-export const GET_ASSUNTOS_OFICIOS = 'GET_ASSUNTOS_OFICIOS'
+export const GET_TIPOS_OFICIO = 'GET_TIPOS_OFICIO'
 
 
 export function getList() {
-    const request = axios.get(`${BASE_URL}/oficioAssuntos`)
+    const request = axios.get(`${BASE_URL}/tiposOficio`)
     return {
-        type: GET_ASSUNTOS_OFICIOS,
+        type: GET_TIPOS_OFICIO,
         payload: request
     }
 }
 
 export function getCount() {
-    const response = axios.get(`${BASE_URL}/oficioAssuntos/count`)
+    const response = axios.get(`${BASE_URL}/tiposOficio/count`)
     return {
         type: GET_COUNT_TIPOS,
         payload: response
@@ -47,7 +47,7 @@ export function remove(values) {
 function submit(values, method) {
     return dispatch => {
         const id = values._id ? values._id : ''
-        axios[method](`${BASE_URL}/oficioAssuntos/${id}`, values)
+        axios[method](`${BASE_URL}/tiposOficio/${id}`, values)
             .then(resp => {
                 toastr.success('Sucesso', 'Operação Realizada com sucesso.')
                 dispatch(init())
@@ -58,19 +58,19 @@ function submit(values, method) {
     }
 }
 
-export function showUpdate(oficioAssuntos) {
+export function showUpdate(tiposOficio) {
     return [ 
         showTabs('tabUpdate'),
         selectTab('tabUpdate'),
-        initialize('oficioAssuntosForm', oficioAssuntos)
+        initialize('tiposOficioForm', tiposOficio)
     ]
 }
 
-export function showDelete(oficioAssuntos) {
+export function showDelete(tiposOficio) {
     return [ 
         showTabs('tabDelete'),
         selectTab('tabDelete'),
-        initialize('oficioAssuntosForm', oficioAssuntos)
+        initialize('tiposOficioForm', tiposOficio)
     ]
 }
 
@@ -79,6 +79,6 @@ export function init() {
         showTabs('tabList', 'tabCreate'),
         selectTab('tabList'),
         getList(),
-        initialize('oficioAssuntosForm', INITIAL_VALUES)
+        initialize('tiposOficioForm', INITIAL_VALUES)
     ]
 }

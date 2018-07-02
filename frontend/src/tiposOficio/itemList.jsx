@@ -9,13 +9,13 @@ class ItemList extends Component {
 
     add(index, item = {}) {
         if(!this.props.readOnly) {
-            this.props.arrayInsert('oficioAssuntosForm', this.props.field, index, item)
+            this.props.arrayInsert('tiposOficioForm', this.props.field, index, item)
         }
     }
 
     remove(index) {
         if(!this.props.readOnly && this.props.list.length > 1) {
-            this.props.arrayRemove('oficioAssuntosForm', this.props.field, index)
+            this.props.arrayRemove('tiposOficioForm', this.props.field, index)
         }
     }
 

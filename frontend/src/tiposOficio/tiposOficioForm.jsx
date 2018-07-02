@@ -4,14 +4,14 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { reduxForm, Field, formValueSelector } from 'redux-form'
 
-import { init, getCount } from './oficioAssuntosActions'
+import { init, getCount } from './tiposOficioActions'
 import LabelAndInput from '../common/form/labelAndInput'
 import LabelAndTextArea from '../common/form/labelAndTextArea'
 import LabelAndEditTextArea from '../common/form/labelAndEditTextArea'
 
 
 
-class OficioAssuntosForm extends Component {
+class TiposOficioForm extends Component {
 
 
 
@@ -32,6 +32,8 @@ class OficioAssuntosForm extends Component {
                     <Field name='nome' component={LabelAndInput} readOnly={readOnly}
                         label='Nome' cols='12' placeholder='Informe um nome' />
 
+                    
+                  
                    
 
                 </div>
@@ -47,9 +49,9 @@ class OficioAssuntosForm extends Component {
     }
 }
 
-OficioAssuntosForm = reduxForm({ form: 'oficioAssuntosForm', destroyOnUnmount: false })(OficioAssuntosForm)
+TiposOficioForm = reduxForm({ form: 'tiposOficioForm', destroyOnUnmount: false })(TiposOficioForm)
 
-const selector = formValueSelector('oficioAssuntosForm')
+const selector = formValueSelector('tiposOficioForm')
 const mapStateToProps = state => ({
     missaoTipo: selector(state, 'missaoTipo'),
     efetivoDescricao: selector(state, 'efetivoDescricao'),
@@ -61,4 +63,4 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => bindActionCreators({
     init, getCount
 }, dispatch)
-export default connect(mapStateToProps, mapDispatchToProps)(OficioAssuntosForm)
+export default connect(mapStateToProps, mapDispatchToProps)(TiposOficioForm)

@@ -20,8 +20,11 @@ module.exports = function (server) {
     const TiposOpes = require('../api/tiposOpes/tiposOpesService')
     TiposOpes.register(protectedApi, '/tiposOpes')
 
-    const OficioAssuntos = require('../api/oficioAssuntos/oficioAssuntosService')
-    OficioAssuntos.register(protectedApi, '/oficioAssuntos')
+    const OficioAssuntos = require('../api/tiposOficio/tiposOficioService')
+    OficioAssuntos.register(protectedApi, '/tiposOficio')
+
+    const Oficios = require('../api/oficios/oficiosService')
+    Oficios.register(protectedApi, '/oficios')
 
    
 

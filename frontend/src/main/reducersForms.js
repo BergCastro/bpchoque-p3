@@ -1,6 +1,7 @@
 import { UPDATE_EFETIVO_DESC, UPDATE_SUGESTOES, UPDATE_TIPO, GET_COUNT } from '../ope/opeActions'
 import { UPDATE_EFETIVO_DESC_TIPO } from '../tipoOpe/tipoOpeActions'
 import { reducer as formReducer } from 'redux-form'
+import { UPDATE_CONTEUDO } from '../oficio/oficioActions';
 
 
 
@@ -93,6 +94,27 @@ export default formReducer.plugin({
       default:
         return state
     }
+  },
+  oficioForm: (state, action) => {   // <----- 'login' is name of form given to reduxForm()
+    switch (action.type) {
+      case UPDATE_CONTEUDO:
+        return {
+          ...state,
+          values: {
+            ...state.values,
+            conteudo: action.payload // <----- clear password value
+          },
+          registeredFields: {
+            ...state.registeredFields,
+            efetivoDescricao: undefined // <----- clear field state, too (touched, etc.)
+          }
+        }
+
+     
+      default:
+        return state
+    }
   }
+
 })
 

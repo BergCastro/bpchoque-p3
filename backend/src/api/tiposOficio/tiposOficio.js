@@ -3,9 +3,10 @@ const mongoose = restful.mongoose
 const Schema = mongoose.Schema
 
 
-const oficioAssuntosSchema = new Schema({
+const tiposOficioSchema = new Schema({
     nome: String,
+    
           
 })
 
-module.exports = restful.model('OficioAssuntos', oficioAssuntosSchema)
+module.exports = restful.model('TiposOficio', tiposOficioSchema)

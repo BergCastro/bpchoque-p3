@@ -1,12 +1,12 @@
-const TiposOpes = require('./tiposOpes')
+const Oficios = require('./oficios')
 const errorHandler = require('../common/errorHandler')
 
-TiposOpes.methods(['get', 'post', 'put', 'delete'])
-TiposOpes.updateOptions({new: true, runValidators: true})
-TiposOpes.after('post', errorHandler).after('put', errorHandler)
+Oficios.methods(['get', 'post', 'put', 'delete'])
+Oficios.updateOptions({new: true, runValidators: true})
+Oficios.after('post', errorHandler).after('put', errorHandler)
 
-TiposOpes.route('count', (req, res, next) => {
-    TiposOpes.count((error, value) => {
+Oficios.route('count', (req, res, next) => {
+    Oficios.count((error, value) => {
         if(error) {
             res.status(500).json({errors: [error]})
         } else {
@@ -17,4 +17,4 @@ TiposOpes.route('count', (req, res, next) => {
 
 
 
-module.exports = TiposOpes
+module.exports = Oficios

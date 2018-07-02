@@ -3,6 +3,15 @@ const mongoose = restful.mongoose
 const Schema = mongoose.Schema
 
 
+
+const oficiosStatus = new Schema({
+    status: String,
+    dataHora: Date,
+    responsavel: String,
+
+
+})
+
 const oficiosSchema = new Schema({
     numero: { type: String, required: true},
     assunto: String,
@@ -11,7 +20,7 @@ const oficiosSchema = new Schema({
     data: Date,
     destino: String,
     conteudo: String,
-    responsavel: String,
+    status: [oficiosStatus]
       
 })
 
