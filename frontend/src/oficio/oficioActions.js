@@ -25,8 +25,8 @@ export const GET_OFICIOS = 'GET_OFICIOS'
 export const GET_TIPOS_OFICIO = 'GET_TIPOS_OFICIO'
 export const GET_COUNT_OFICIO = 'GET_COUNT_OFICIO'
 export const UPDATE_CONTEUDO = 'UPDATE_CONTEUDO'
-export const UPDATE_TIPO = 'UPDATE_TIPO'
-export const UPDATE_SUGESTOES = 'UPDATE_SUGESTOES'
+export const UPDATE_TIPO_OFICIO = 'UPDATE_TIPO_OFICIO'
+export const UPDATE_SUGESTOES_OFICIO = 'UPDATE_SUGESTOES_OFICIO'
 
 
 export function getList() {
@@ -61,10 +61,10 @@ export function updateConteudo(value) {
     }
 }
 
-export function updateTipo(value) {
+export function updateTipoOficio(value) {
 
     return {
-            type: UPDATE_TIPO,
+            type: UPDATE_TIPO_OFICIO,
             payload: value
     }
 }
@@ -72,7 +72,7 @@ export function updateTipo(value) {
 export function updateSugestoes(value) {
 
     return {
-            type: UPDATE_SUGESTOES,
+            type: UPDATE_SUGESTOES_OFICIO,
             payload: value
     }
 }

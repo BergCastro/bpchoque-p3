@@ -5,6 +5,10 @@ const Schema = mongoose.Schema
 
 const tiposOficioSchema = new Schema({
     nome: String,
+    referencia: String,
+    anexo: String,
+    destino: String,
+    conteudo: String,
     
           
 })

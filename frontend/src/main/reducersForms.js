@@ -1,7 +1,8 @@
 import { UPDATE_EFETIVO_DESC, UPDATE_SUGESTOES, UPDATE_TIPO, GET_COUNT } from '../ope/opeActions'
 import { UPDATE_EFETIVO_DESC_TIPO } from '../tipoOpe/tipoOpeActions'
 import { reducer as formReducer } from 'redux-form'
-import { UPDATE_CONTEUDO } from '../oficio/oficioActions';
+import { UPDATE_CONTEUDO, UPDATE_SUGESTOES_OFICIO, UPDATE_TIPO_OFICIO } from '../oficio/oficioActions'
+import { UPDATE_CONTEUDO_TIPO } from '../tiposOficio/tiposOficioActions'
 
 
 
@@ -27,14 +28,9 @@ export default formReducer.plugin({
           ...state,
           values: {
             ...state.values,
-            ref: action.payload.referencia,
-            missaoDescricao: action.payload.missaoDescricao,
-            local: action.payload.local,
-            horaQuartel: action.payload.horaQuartel,
-            horaLocal: action.payload.horaLocal,
-            equipamento: action.payload.equipamento,
-            efetivoDescricao: action.payload.efetivoDescricao,
-            observacoes: action.payload.prescricoes,
+            referencia: action.payload.referencia,
+            conteudo: action.payload.conteudo,
+            
             
             // <----- clear password value
           },
@@ -106,9 +102,61 @@ export default formReducer.plugin({
           },
           registeredFields: {
             ...state.registeredFields,
-            efetivoDescricao: undefined // <----- clear field state, too (touched, etc.)
+            conteudo: '' // <----- clear field state, too (touched, etc.)
           }
         }
+        case UPDATE_TIPO_OFICIO:
+        return {
+          ...state,
+          values: {
+            ...state.values,
+            missaoTipo: action.payload
+            // <----- clear password value
+          },
+          registeredFields: {
+            ...state.registeredFields,
+
+          }
+        }
+        case UPDATE_SUGESTOES_OFICIO:
+        return {
+          ...state,
+          values: {
+            ...state.values,
+            referencia: action.payload.referencia,
+            anexo: action.payload.anexo,
+            destino: action.payload.destino,
+            conteudo: action.payload.horaQuartel,
+            
+            
+            // <----- clear password value
+          },
+          registeredFields: {
+            ...state.registeredFields,
+
+          }
+        }
+
+     
+      default:
+        return state
+    }
+  },
+  tiposOficioForm: (state, action) => {   // <----- 'login' is name of form given to reduxForm()
+    switch (action.type) {
+      case UPDATE_CONTEUDO_TIPO:
+        return {
+          ...state,
+          values: {
+            ...state.values,
+            conteudo: action.payload // <----- clear password value
+          },
+          registeredFields: {
+            ...state.registeredFields,
+            conteudo: '' // <----- clear field state, too (touched, etc.)
+          }
+        }
+        
 
      
       default:

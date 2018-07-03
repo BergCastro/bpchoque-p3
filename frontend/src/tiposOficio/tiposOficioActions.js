@@ -6,11 +6,13 @@ import { showTabs, selectTab } from '../common/tab/tabActions'
 
 
 
+
 const BASE_URL = 'http://localhost:3003/api'
-const INITIAL_VALUES = {efetivoDescricao: ''}
+const INITIAL_VALUES = {conteudo: ''}
 
 export const GET_COUNT_TIPOS = 'GET_COUNT_TIPOS'
 export const GET_TIPOS_OFICIO = 'GET_TIPOS_OFICIO'
+export const UPDATE_CONTEUDO_TIPO = 'UPDATE_CONTEUDO_TIPO'
 
 
 export function getList() {
@@ -29,6 +31,13 @@ export function getCount() {
     }
 }
 
+export function updateConteudo(value) {
+
+    return {
+            type: UPDATE_CONTEUDO_TIPO,
+            payload: value
+    }
+}
 
 
 

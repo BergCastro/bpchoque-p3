@@ -8,7 +8,7 @@ import {
     init,
     updateConteudo,
     getCount,
-    updateTipo,
+    updateTipoOficio,
     updateSugestoes
 } from './oficioActions'
 import LabelAndInput from '../common/form/labelAndInput'
@@ -48,12 +48,12 @@ class OficioForm extends Component {
         const { tabUpdate, tabDelete, updateTipo, updateSugestoes, tiposOficios } = this.props
         const value = event.target.value
         
-        updateTipo(value)
+        updateTipoOficio(value)
         if (!tabUpdate && !tabDelete){
             const tipoOficio = tiposOficios.filter((tipo) => tipo.nome === value)
             
             updateSugestoes(tipoOficio[0])
-            this.setState({value: RichTextEditor.createValueFromString(tipoOficio[0].efetivoDescricao, 'html')})
+            this.setState({value: RichTextEditor.createValueFromString(tipoOficio[0].conteudo, 'html')})
         }
            
 
@@ -83,12 +83,15 @@ class OficioForm extends Component {
             <form onSubmit={handleSubmit}>
                 <div className='box-body'>
                     <Field name='numero' component={LabelAndInput} readOnly={readOnly}
-                        label='Número' cols='12 3' />
+                        label='Número' cols='12 4' />
 
                     
 
                     <Field name='data' component={LabelAndInput} readOnly={readOnly}
-                        label='Data da Missão' cols='12 3' placeholder='Informe a data da missão' />
+                        label='Data da Missão' cols='12 4' placeholder='Informe a data da missão' />
+                    
+                    <Field name='assunto' component={LabelAndSelect} readOnly={readOnly}
+                        label='Tipo' cols='12 4' placeholder='Selecione um tipo!' itens={tiposNomes} onChange={this.updateTipo} />
 
                    
 
@@ -99,7 +102,7 @@ class OficioForm extends Component {
                         label='Anexo' cols='12' placeholder='Informe uma descrição' />
 
                     <Field name='destino' component={LabelAndTextArea} readOnly={readOnly}
-                        label='Local' cols='12' placeholder='Informe o local da missão' />
+                        label='Destino' cols='12' placeholder='Informe o local da missão' />
 
                     
 
@@ -140,7 +143,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     init,
     updateConteudo,
     getCount,
-    updateTipo,
+    updateTipoOficio,
     updateSugestoes
 }, dispatch)
 export default connect(mapStateToProps, mapDispatchToProps)(OficioForm)
