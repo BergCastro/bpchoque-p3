@@ -79,8 +79,20 @@ export function updateSugestoes(value) {
 
 
 export function create(values) {
-    return submit(values, 'post')
+    const valor = {
+                    ...values,
+                    status:[
+                        {
+                         status: "Aberto",
+                         dataHora: Date.now(),
+                         responsavel: "3° Sgt Lecio"   
+                        }
+                    ]
+                  }
+    return submit(valor, 'post')
 }
+
+
 
 export function update(values) {
     return submit(values, 'put')

@@ -12,70 +12,83 @@ import {
     updateSugestoes
 } from './oficioActions'
 import LabelAndInput from '../common/form/labelAndInput'
+import LabelAndTable from '../common/form/labelAndTable'
 import LabelAndTextArea from '../common/form/labelAndTextArea'
 import LabelAndEditTextArea from './labelAndEditTextArea'
 import LabelAndSelect from '../common/form/labelAndSelect'
 import RichTextEditor from 'react-rte'
+import ListStatus from './oficioStatusList'
 
 
 class OficioForm extends Component {
 
 
-    
+
     prioridades = [
         'OBRIGATÓRIA',
         'PARCIAL',
         'DE ACORDO COM A DEMANDA'
     ]
 
+    statusList = [
+        'Aberto',
+        'Em transito',
+        'Arquivado'
+    
+    ]
+
     state = {
         value: RichTextEditor.createEmptyValue()
-      }
-   
+    }
+
 
     componentDidMount() {
-        const {  conteudo } = this.props
-       
+        const { conteudo } = this.props
 
-        this.setState({ value: RichTextEditor.createValueFromString(conteudo, 'html')})
+
+        this.setState({ value: RichTextEditor.createValueFromString(conteudo, 'html') })
 
     }
 
 
-    
+
 
     updateTipo = (event) => {
-        const { tabUpdate, tabDelete, updateTipo, updateSugestoes, tiposOficios } = this.props
+        const { tabUpdate, tabDelete, updateSugestoes, tiposOficios } = this.props
         const value = event.target.value
-        
+
         updateTipoOficio(value)
-        if (!tabUpdate && !tabDelete){
+        if (!tabUpdate && !tabDelete) {
             const tipoOficio = tiposOficios.filter((tipo) => tipo.nome === value)
-            
+
             updateSugestoes(tipoOficio[0])
-            this.setState({value: RichTextEditor.createValueFromString(tipoOficio[0].conteudo, 'html')})
+            this.setState({ value: RichTextEditor.createValueFromString(tipoOficio[0].conteudo, 'html') })
         }
-           
+
 
 
     }
+    updateStatus = (event) => {
+        const value = event.target.value
+        //updateStatus(value)
+    }
 
-   
+
 
     onChange = (value) => {
-        this.setState({value})
-       
-        this.props.updateConteudo(value.toString('html'))
-           
-   }
+        this.setState({ value })
 
-   
+        this.props.updateConteudo(value.toString('html'))
+
+    }
+
+
 
 
     render() {
-        const { handleSubmit, readOnly, tiposOficios } = this.props
+        const { handleSubmit, readOnly, tiposOficios, status } = this.props
         const tiposNomes = tiposOficios.map((tipo) => tipo.nome)
-        
+
 
 
         return (
@@ -83,17 +96,17 @@ class OficioForm extends Component {
             <form onSubmit={handleSubmit}>
                 <div className='box-body'>
                     <Field name='numero' component={LabelAndInput} readOnly={readOnly}
-                        label='Número' cols='12 4' />
-
-                    
+                        label='Número' cols='12 2' />
 
                     <Field name='data' component={LabelAndInput} readOnly={readOnly}
-                        label='Data da Missão' cols='12 4' placeholder='Informe a data da missão' />
-                    
+                        label='Data da Missão' cols='12 3' placeholder='Informe a data da missão' />
+
                     <Field name='assunto' component={LabelAndSelect} readOnly={readOnly}
                         label='Tipo' cols='12 4' placeholder='Selecione um tipo!' itens={tiposNomes} onChange={this.updateTipo} />
 
-                   
+                    <Field name='statusAtual' component={LabelAndSelect} readOnly={readOnly}
+                        label='Status Atual' cols='12 3' placeholder='Selecione um tipo!' itens={this.statusList} onChange={this.updateTipo} />
+
 
                     <Field name='referencia' component={LabelAndTextArea} readOnly={readOnly}
                         label='Referência/Determinação' cols='12' placeholder='Informe de quem foi a determinação' />
@@ -104,16 +117,13 @@ class OficioForm extends Component {
                     <Field name='destino' component={LabelAndTextArea} readOnly={readOnly}
                         label='Destino' cols='12' placeholder='Informe o local da missão' />
 
-                    
-
 
                     <LabelAndEditTextArea readOnly={readOnly}
-                        label='Conteúdo' cols='12' placeholder='Informe o conteúdo' valor={this.state.value} onChange={this.onChange}/>
-                    
-                    
-                    
-                    
+                        label='Conteúdo' cols='12' placeholder='Informe o conteúdo' valor={this.state.value} onChange={this.onChange} />
 
+
+
+                    <ListStatus list={status} />
                 </div>
                 <div className='box-footer'>
                     <button type='submit' className={`btn btn-${this.props.submitClass}`}>
@@ -131,10 +141,12 @@ OficioForm = reduxForm({ form: 'oficioForm', destroyOnUnmount: false })(OficioFo
 
 const selector = formValueSelector('oficioForm')
 const mapStateToProps = state => ({
-    missaoTipo: selector(state, 'missaoTipo'),
+    assunto: selector(state, 'assunto'),
     conteudo: selector(state, 'conteudo'),
+    status: selector(state, 'status'),
+
     //tabUpdate: state.tab.visible.tabUpdate,
-   // tabDelete: state.tab.visible.tabDelete,
+    // tabDelete: state.tab.visible.tabDelete,
     tiposOficios: state.oficio.tiposOficios
 
 

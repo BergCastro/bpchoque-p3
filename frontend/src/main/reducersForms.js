@@ -110,7 +110,7 @@ export default formReducer.plugin({
           ...state,
           values: {
             ...state.values,
-            missaoTipo: action.payload
+            assunto: action.payload
             // <----- clear password value
           },
           registeredFields: {

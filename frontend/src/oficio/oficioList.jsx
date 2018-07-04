@@ -20,10 +20,12 @@ class OficioList extends Component {
         const list = this.props.list || []
         const listByNumero = list.sort(sortBy('-numero'))
         return listByNumero.map(oficio => (
+            
             <tr key={oficio._id}>
                 <td>{oficio.numero}</td>
                 <td>{this.formatDate(oficio.data)}</td>
                 <td>{oficio.assunto}</td>
+                <td>{oficio.status.sort(sortBy('-_id'))[0].status}</td>
                 <td>
                     <button className='btn btn-warning' onClick={() => this.props.showUpdate(oficio)}>
                         <i className='fa fa-pencil'></i>
@@ -45,6 +47,7 @@ class OficioList extends Component {
                             <th>Número</th>
                             <th>Data</th>
                             <th>Tipo</th>
+                            <th>Status</th>
                             <th className='table-actions'>Ações</th>
                         </tr>
                     </thead>
