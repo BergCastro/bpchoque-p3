@@ -6,7 +6,7 @@ export default props => (
         <div className='form-group'>
             <label htmlFor={props.name}>{props.label}</label>
 
-            <select {...props.input} className="form-control" readOnly={props.readOnly} type={props.type}>
+            <select {...props.input} className="form-control" readOnly={props.readOnly} type={props.type} disabled={props.disabled}>
                 <option value="">Selecione uma opção</option>
                 {props.itens.map((item, index) => (
                     <option key={index} value={item}>{item}</option>

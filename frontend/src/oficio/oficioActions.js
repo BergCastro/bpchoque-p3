@@ -9,16 +9,18 @@ import { showTabs, selectTab } from '../common/tab/tabActions'
 
 const BASE_URL = 'http://localhost:3003/api'
 const INITIAL_VALUES = {
-    
+
     conteudo: '',
     assunto: '',
     referencia: '',
     destino: '',
     local: '',
     anexo: '',
-    
-   
-    
+    user: '',
+    statusAtual: 'Não iniciado'
+
+
+
 }
 
 export const GET_OFICIOS = 'GET_OFICIOS'
@@ -27,6 +29,8 @@ export const GET_COUNT_OFICIO = 'GET_COUNT_OFICIO'
 export const UPDATE_CONTEUDO = 'UPDATE_CONTEUDO'
 export const UPDATE_TIPO_OFICIO = 'UPDATE_TIPO_OFICIO'
 export const UPDATE_SUGESTOES_OFICIO = 'UPDATE_SUGESTOES_OFICIO'
+export const UPDATE_USER = 'UPDATE_USER'
+export const UPDATE_STATUS_ATUAL = 'UPDATE_STATUS_ATUAL'
 
 
 export function getList() {
@@ -56,39 +60,65 @@ export function getCount() {
 export function updateConteudo(value) {
 
     return {
-            type: UPDATE_CONTEUDO,
-            payload: value
+        type: UPDATE_CONTEUDO,
+        payload: value
     }
 }
 
 export function updateTipoOficio(value) {
 
     return {
-            type: UPDATE_TIPO_OFICIO,
-            payload: value
+        type: UPDATE_TIPO_OFICIO,
+        payload: value
     }
 }
 
 export function updateSugestoes(value) {
 
     return {
-            type: UPDATE_SUGESTOES_OFICIO,
-            payload: value
+        type: UPDATE_SUGESTOES_OFICIO,
+        payload: value
+    }
+}
+
+export function updateUser(value) {
+    
+    return {
+        type: UPDATE_USER,
+        payload: value
+    }
+}
+
+export function updateStatusAtual(value, user) {
+    const newStatus = {
+            
+        status: value,
+        dataHora: Date.now(),
+        responsavel: user
+    }
+
+    return {
+        type: UPDATE_STATUS_ATUAL,
+        payload: newStatus       
+
     }
 }
 
 
 export function create(values) {
+    // const user = state.auth.user
+    console.log('values: ' + JSON.stringify(values))
     const valor = {
-                    ...values,
-                    status:[
-                        {
-                         status: "Aberto",
-                         dataHora: Date.now(),
-                         responsavel: "3° Sgt Lecio"   
-                        }
-                    ]
-                  }
+        ...values,
+        statusAtual: 'Aberto',
+        status: [
+            {
+                status: "Aberto",
+                dataHora: Date.now(),
+                responsavel: values.user
+            }
+        ]
+    }
     return submit(valor, 'post')
 }
 
@@ -105,7 +135,7 @@ export function remove(values) {
 function submit(values, method) {
     return dispatch => {
         //const valores = {...values,
-          //              efetivoDescricao: values.efetivoDescricao.toString('html')}
+        //              efetivoDescricao: values.efetivoDescricao.toString('html')}
         const id = values._id ? values._id : ''
         axios[method](`${BASE_URL}/oficios/${id}`, values)
             .then(resp => {
@@ -113,7 +143,7 @@ function submit(values, method) {
                 dispatch(init())
             })
             .catch(e => {
-                console.log('event: '+e)
+                console.log('event: ' + e)
                 e.response.data.errors.forEach(error => toastr.error('Erro', error))
             })
     }
@@ -121,8 +151,8 @@ function submit(values, method) {
 
 export function showUpdate(oficio) {
     //const oficioValue = {...oficio,
-   //efetivoDescricao: RichTextEditor.createValueFromString(oficio.efetivoDescricao, 'html')}
-    return [ 
+    //efetivoDescricao: RichTextEditor.createValueFromString(oficio.efetivoDescricao, 'html')}
+    return [
         showTabs('tabUpdate'),
         selectTab('tabUpdate'),
         initialize('oficioForm', oficio)
@@ -132,7 +162,7 @@ export function showUpdate(oficio) {
 export function showDelete(oficio) {
     //const oficioValue = {...oficio,
     //    efetivoDescricao: RichTextEditor.createValueFromString(oficio.efetivoDescricao, 'html')}
-    return [ 
+    return [
         showTabs('tabDelete'),
         selectTab('tabDelete'),
         initialize('oficioForm', oficio)
@@ -141,7 +171,7 @@ export function showDelete(oficio) {
 
 export function init() {
     //const numero = axios.get(`${BASE_URL}/oficios/count`)
-    
+
     return [
         showTabs('tabList', 'tabCreate'),
         selectTab('tabList'),
@@ -149,6 +179,6 @@ export function init() {
         getTiposOficios(),
         initialize('oficioForm', INITIAL_VALUES),
         getCount()
-        
+
     ]
 }

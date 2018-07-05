@@ -1,7 +1,11 @@
 import { UPDATE_EFETIVO_DESC, UPDATE_SUGESTOES, UPDATE_TIPO, GET_COUNT } from '../ope/opeActions'
 import { UPDATE_EFETIVO_DESC_TIPO } from '../tipoOpe/tipoOpeActions'
 import { reducer as formReducer } from 'redux-form'
-import { UPDATE_CONTEUDO, UPDATE_SUGESTOES_OFICIO, UPDATE_TIPO_OFICIO } from '../oficio/oficioActions'
+import { UPDATE_CONTEUDO, 
+         UPDATE_SUGESTOES_OFICIO, 
+         UPDATE_TIPO_OFICIO, 
+         UPDATE_USER,
+         UPDATE_STATUS_ATUAL } from '../oficio/oficioActions'
 import { UPDATE_CONTEUDO_TIPO } from '../tiposOficio/tiposOficioActions'
 
 
@@ -99,6 +103,34 @@ export default formReducer.plugin({
           values: {
             ...state.values,
             conteudo: action.payload // <----- clear password value
+          },
+          registeredFields: {
+            ...state.registeredFields,
+            conteudo: '' // <----- clear field state, too (touched, etc.)
+          }
+        }
+        case UPDATE_USER:
+        return {
+          ...state,
+          values: {
+            ...state.values,
+            user: action.payload // <----- clear password value
+          },
+          registeredFields: {
+            ...state.registeredFields,
+            conteudo: '' // <----- clear field state, too (touched, etc.)
+          }
+        }
+        case UPDATE_STATUS_ATUAL:
+        return {
+          ...state,
+          values: {
+            ...state.values,
+            statusAtual: action.payload.status,
+            status:[ ...state.initial.status,
+              action.payload
+
+            ]
           },
           registeredFields: {
             ...state.registeredFields,

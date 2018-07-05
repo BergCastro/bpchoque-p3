@@ -9,9 +9,12 @@ import {
     updateConteudo,
     getCount,
     updateTipoOficio,
-    updateSugestoes
+    updateSugestoes,
+    updateUser,
+    updateStatusAtual
 } from './oficioActions'
 import LabelAndInput from '../common/form/labelAndInput'
+import LabelAndInputHidden from '../common/form/labelAndInputHidden'
 import LabelAndTable from '../common/form/labelAndTable'
 import LabelAndTextArea from '../common/form/labelAndTextArea'
 import LabelAndEditTextArea from './labelAndEditTextArea'
@@ -31,10 +34,11 @@ class OficioForm extends Component {
     ]
 
     statusList = [
+        
         'Aberto',
         'Em transito',
         'Arquivado'
-    
+
     ]
 
     state = {
@@ -43,13 +47,13 @@ class OficioForm extends Component {
 
 
     componentDidMount() {
-        const { conteudo } = this.props
+        const { conteudo, user, updateUser } = this.props
+        updateUser(user.name)
 
 
         this.setState({ value: RichTextEditor.createValueFromString(conteudo, 'html') })
 
     }
-
 
 
 
@@ -69,8 +73,10 @@ class OficioForm extends Component {
 
     }
     updateStatus = (event) => {
+        const { user, updateStatusAtual} = this.props
         const value = event.target.value
-        //updateStatus(value)
+        
+        updateStatusAtual(value, user.name)
     }
 
 
@@ -86,8 +92,19 @@ class OficioForm extends Component {
 
 
     render() {
-        const { handleSubmit, readOnly, tiposOficios, status } = this.props
+        const { handleSubmit, readOnly, tiposOficios, status, user, statusAtual } = this.props
         const tiposNomes = tiposOficios.map((tipo) => tipo.nome)
+        const statusOficio = status || []
+        const statusUltilizados = statusOficio.map((stat) => stat.status)
+        console.log('statusUltilizados: '+ statusUltilizados)
+        const statusDisponiveis = this.statusList.filter(function(item) {
+            return !statusUltilizados.includes(item); 
+          })
+        statusDisponiveis.push(statusAtual)
+        const statusCombo = statusDisponiveis
+            
+
+        
 
 
 
@@ -105,7 +122,7 @@ class OficioForm extends Component {
                         label='Tipo' cols='12 4' placeholder='Selecione um tipo!' itens={tiposNomes} onChange={this.updateTipo} />
 
                     <Field name='statusAtual' component={LabelAndSelect} readOnly={readOnly}
-                        label='Status Atual' cols='12 3' placeholder='Selecione um tipo!' itens={this.statusList} onChange={this.updateTipo} />
+                        label='Status Atual' cols='12 3' placeholder='Selecione um tipo!' itens={this.statusList} onChange={this.updateStatus} disabled={statusOficio.length === 0 ? true : false} />
 
 
                     <Field name='referencia' component={LabelAndTextArea} readOnly={readOnly}
@@ -121,9 +138,10 @@ class OficioForm extends Component {
                     <LabelAndEditTextArea readOnly={readOnly}
                         label='Conteúdo' cols='12' placeholder='Informe o conteúdo' valor={this.state.value} onChange={this.onChange} />
 
+                    <Field name='user' component={LabelAndInputHidden} readOnly={readOnly}
+                        label='User' cols='12' placeholder='Informe a data da missão' valor={user.name} />
 
-
-                    <ListStatus list={status} />
+                    <ListStatus list={statusOficio} />
                 </div>
                 <div className='box-footer'>
                     <button type='submit' className={`btn btn-${this.props.submitClass}`}>
@@ -144,10 +162,12 @@ const mapStateToProps = state => ({
     assunto: selector(state, 'assunto'),
     conteudo: selector(state, 'conteudo'),
     status: selector(state, 'status'),
+    statusAtual: selector(state, 'statusAtual'),
 
     //tabUpdate: state.tab.visible.tabUpdate,
     // tabDelete: state.tab.visible.tabDelete,
-    tiposOficios: state.oficio.tiposOficios
+    tiposOficios: state.oficio.tiposOficios,
+    user: state.auth.user
 
 
 })
@@ -156,6 +176,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     updateConteudo,
     getCount,
     updateTipoOficio,
-    updateSugestoes
+    updateSugestoes,
+    updateUser,
+    updateStatusAtual
 }, dispatch)
 export default connect(mapStateToProps, mapDispatchToProps)(OficioForm)

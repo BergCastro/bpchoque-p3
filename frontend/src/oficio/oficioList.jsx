@@ -12,8 +12,14 @@ class OficioList extends Component {
 
     formatDate(date){
         const data = new Date(date)
+        const options = { year: 'numeric',
+                          month: 'long', 
+                          day: 'numeric', 
+                          hour: 'numeric',
+                          minute: 'numeric',
+                          second: 'numeric' }
        
-        return data.toLocaleDateString()
+        return data.toLocaleDateString('pt-BR', options)
     }
 
     renderRows() {
@@ -25,7 +31,7 @@ class OficioList extends Component {
                 <td>{oficio.numero}</td>
                 <td>{this.formatDate(oficio.data)}</td>
                 <td>{oficio.assunto}</td>
-                <td>{oficio.status.sort(sortBy('-_id'))[0].status}</td>
+                <td>{oficio.status.sort(sortBy('-dataHora'))[0].status}</td>
                 <td>
                     <button className='btn btn-warning' onClick={() => this.props.showUpdate(oficio)}>
                         <i className='fa fa-pencil'></i>

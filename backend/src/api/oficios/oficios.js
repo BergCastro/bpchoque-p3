@@ -20,6 +20,7 @@ const oficiosSchema = new Schema({
     data: Date,
     destino: String,
     conteudo: String,
+    statusAtual: String,
     status: [oficiosStatus]
       
 })
