@@ -10,15 +10,17 @@ class OficioList extends Component {
         this.props.getList()
     }
 
-    formatDate(date){
+    formatDate(date) {
         const data = new Date(date)
-        const options = { year: 'numeric',
-                          month: 'long', 
-                          day: 'numeric', 
-                          hour: 'numeric',
-                          minute: 'numeric',
-                          second: 'numeric' }
-       
+        const options = {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+            second: 'numeric'
+        }
+
         return data.toLocaleDateString('pt-BR', options)
     }
 
@@ -26,13 +28,16 @@ class OficioList extends Component {
         const list = this.props.list || []
         const listByNumero = list.sort(sortBy('-numero'))
         return listByNumero.map(oficio => (
-            
+
             <tr key={oficio._id}>
                 <td>{oficio.numero}</td>
                 <td>{this.formatDate(oficio.data)}</td>
                 <td>{oficio.assunto}</td>
                 <td>{oficio.status.sort(sortBy('-dataHora'))[0].status}</td>
                 <td>
+                    <button className='btn btn-success' onClick={() => this.props.showUpdate(oficio)}>
+                        <i className='glyphicon glyphicon-search'></i>
+                    </button>
                     <button className='btn btn-warning' onClick={() => this.props.showUpdate(oficio)}>
                         <i className='fa fa-pencil'></i>
                     </button>
@@ -53,7 +58,7 @@ class OficioList extends Component {
                             <th>Número</th>
                             <th>Data</th>
                             <th>Tipo</th>
-                            <th>Status</th>
+                            <th>Status Atual</th>
                             <th className='table-actions'>Ações</th>
                         </tr>
                     </thead>
@@ -66,6 +71,6 @@ class OficioList extends Component {
     }
 }
 
-const mapStateToProps = state => ({list: state.oficio.list})
-const mapDispatchToProps = dispatch => bindActionCreators({getList, showUpdate, showDelete}, dispatch)
+const mapStateToProps = state => ({ list: state.oficio.list })
+const mapDispatchToProps = dispatch => bindActionCreators({ getList, showUpdate, showDelete }, dispatch)
 export default connect(mapStateToProps, mapDispatchToProps)(OficioList)

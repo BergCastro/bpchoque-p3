@@ -16,6 +16,8 @@ const sendErrorsFromDB = (res, dbErrors) => {
 const login = (req, res, next) => {
     const email = req.body.email || ''
     const password = req.body.password || ''
+    
+    
 
     User.findOne({ email }, (err, user) => {
         if (err) {
@@ -24,8 +26,8 @@ const login = (req, res, next) => {
             const token = jwt.sign(user, env.authSecret, {
                 expiresIn: "1 day"
             })
-            const { name, email } = user
-            res.json({ name, email, token })
+            const { name, email, cargo, nomeGuerra } = user
+            res.json({ name, email, cargo, nomeGuerra, token })
         } else {
             return res.status(400).send({ errors: ['Usuário/Senha inválidos'] })
         }
@@ -42,6 +44,8 @@ const validateToken = (req, res, next) => {
 
 const signup = (req, res, next) => {
     const name = req.body.name || ''
+    const cargo = req.body.cargo || ''
+    const nomeGuerra = req.body.nomeGuerra || ''
     const email = req.body.email || ''
     const password = req.body.password || ''
     const confirmPassword = req.body.confirm_password || ''
@@ -70,7 +74,7 @@ const signup = (req, res, next) => {
         } else if (user) {
             return res.status(400).send({ errors: ['Usuário já cadastrado.'] })
         } else {
-            const newUser = new User({ name, email, password: passwordHash })
+            const newUser = new User({ name, cargo, nomeGuerra, email, password: passwordHash })
             newUser.save(err => {
                 if (err) {
                     return sendErrorsFromDB(res, err)

@@ -15,7 +15,6 @@ import {
 } from './oficioActions'
 import LabelAndInput from '../common/form/labelAndInput'
 import LabelAndInputHidden from '../common/form/labelAndInputHidden'
-import LabelAndTable from '../common/form/labelAndTable'
 import LabelAndTextArea from '../common/form/labelAndTextArea'
 import LabelAndEditTextArea from './labelAndEditTextArea'
 import LabelAndSelect from '../common/form/labelAndSelect'
@@ -47,11 +46,14 @@ class OficioForm extends Component {
 
 
     componentDidMount() {
+        
         const { conteudo, user, updateUser } = this.props
-        updateUser(user.name)
+        console.log('user: '+JSON.stringify(user))
+        updateUser(user.cargo+" "+user.nomeGuerra)
 
 
         this.setState({ value: RichTextEditor.createValueFromString(conteudo, 'html') })
+        console.log("entrou no didmount")
 
     }
 
@@ -76,7 +78,7 @@ class OficioForm extends Component {
         const { user, updateStatusAtual} = this.props
         const value = event.target.value
         
-        updateStatusAtual(value, user.name)
+        updateStatusAtual(value, user.cargo+" "+user.nomeGuerra)
     }
 
 
@@ -95,13 +97,13 @@ class OficioForm extends Component {
         const { handleSubmit, readOnly, tiposOficios, status, user, statusAtual } = this.props
         const tiposNomes = tiposOficios.map((tipo) => tipo.nome)
         const statusOficio = status || []
-        const statusUltilizados = statusOficio.map((stat) => stat.status)
+        const statusUltilizados = statusOficio.map((stat) => stat.status) || []
         console.log('statusUltilizados: '+ statusUltilizados)
         const statusDisponiveis = this.statusList.filter(function(item) {
             return !statusUltilizados.includes(item); 
           })
         statusDisponiveis.push(statusAtual)
-        const statusCombo = statusDisponiveis
+        const statusCombo = statusDisponiveis || []
             
 
         
@@ -122,7 +124,7 @@ class OficioForm extends Component {
                         label='Tipo' cols='12 4' placeholder='Selecione um tipo!' itens={tiposNomes} onChange={this.updateTipo} />
 
                     <Field name='statusAtual' component={LabelAndSelect} readOnly={readOnly}
-                        label='Status Atual' cols='12 3' placeholder='Selecione um tipo!' itens={this.statusList} onChange={this.updateStatus} disabled={statusOficio.length === 0 ? true : false} />
+                        label='Status Atual' cols='12 3' placeholder='Selecione um tipo!' itens={statusCombo} onChange={this.updateStatus} disabled={statusOficio.length === 0 ? true : false} />
 
 
                     <Field name='referencia' component={LabelAndTextArea} readOnly={readOnly}

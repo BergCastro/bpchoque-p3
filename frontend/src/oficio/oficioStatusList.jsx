@@ -23,8 +23,8 @@ class OficioStatusList extends Component {
     renderRows() {
         const list = this.props.list || []
         const listByNumero = list.sort(sortBy('dataHora'))
-        return listByNumero.map(status => (
-            <tr key={status._id}>
+        return listByNumero.map((status, index) => (
+            <tr key={index}>
                 <td>{this.formatDate(status.dataHora)}</td>
                 <td>{status.responsavel}</td>
                 <td>{status.status}</td>

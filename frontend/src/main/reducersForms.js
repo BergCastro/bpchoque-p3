@@ -106,7 +106,7 @@ export default formReducer.plugin({
           },
           registeredFields: {
             ...state.registeredFields,
-            conteudo: '' // <----- clear field state, too (touched, etc.)
+            conteudo: undefined // <----- clear field state, too (touched, etc.)
           }
         }
         case UPDATE_USER:
