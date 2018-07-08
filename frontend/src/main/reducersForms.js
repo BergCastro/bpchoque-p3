@@ -5,6 +5,7 @@ import { UPDATE_CONTEUDO,
          UPDATE_SUGESTOES_OFICIO, 
          UPDATE_TIPO_OFICIO, 
          UPDATE_USER,
+         UPDATE_NUMERO,
          UPDATE_STATUS_ATUAL } from '../oficio/oficioActions'
 import { UPDATE_CONTEUDO_TIPO } from '../tiposOficio/tiposOficioActions'
 
@@ -119,6 +120,18 @@ export default formReducer.plugin({
           registeredFields: {
             ...state.registeredFields,
             conteudo: '' // <----- clear field state, too (touched, etc.)
+          }
+        }
+        case UPDATE_NUMERO:
+        return {
+          ...state,
+          values: {
+            ...state.values,
+            numero: action.payload // <----- clear password value
+          },
+          registeredFields: {
+            ...state.registeredFields,
+             // <----- clear field state, too (touched, etc.)
           }
         }
         case UPDATE_STATUS_ATUAL:

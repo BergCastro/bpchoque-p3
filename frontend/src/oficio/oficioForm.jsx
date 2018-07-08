@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { reduxForm, Field, formValueSelector } from 'redux-form'
 
+
 import {
     init,
     updateConteudo,
@@ -11,9 +12,12 @@ import {
     updateTipoOficio,
     updateSugestoes,
     updateUser,
-    updateStatusAtual
+    updateStatusAtual,
+    
 } from './oficioActions'
+//import {updateControle} from '../controleDocumento/controleDocumentoActions'
 import LabelAndInput from '../common/form/labelAndInput'
+import LabelAndLabel from '../common/form/labelAndLabel'
 import LabelAndInputHidden from '../common/form/labelAndInputHidden'
 import LabelAndTextArea from '../common/form/labelAndTextArea'
 import LabelAndEditTextArea from './labelAndEditTextArea'
@@ -36,7 +40,8 @@ class OficioForm extends Component {
         
         'Aberto',
         'Em transito',
-        'Arquivado'
+        'Arquivado',
+        'Cancelado'
 
     ]
 
@@ -45,15 +50,21 @@ class OficioForm extends Component {
     }
 
 
-    componentDidMount() {
+    
+        
+    
+    componentWillMount() {
         
         const { conteudo, user, updateUser } = this.props
-        console.log('user: '+JSON.stringify(user))
         updateUser(user.cargo+" "+user.nomeGuerra)
+        
 
 
         this.setState({ value: RichTextEditor.createValueFromString(conteudo, 'html') })
-        console.log("entrou no didmount")
+        
+        
+       
+      
 
     }
 
@@ -94,17 +105,20 @@ class OficioForm extends Component {
 
 
     render() {
-        const { handleSubmit, readOnly, tiposOficios, status, user, statusAtual } = this.props
+        const { handleSubmit, readOnly, tiposOficios, status, user, statusAtual, numero} = this.props
         const tiposNomes = tiposOficios.map((tipo) => tipo.nome)
         const statusOficio = status || []
         const statusUltilizados = statusOficio.map((stat) => stat.status) || []
-        console.log('statusUltilizados: '+ statusUltilizados)
         const statusDisponiveis = this.statusList.filter(function(item) {
             return !statusUltilizados.includes(item); 
           })
         statusDisponiveis.push(statusAtual)
         const statusCombo = statusDisponiveis || []
-            
+
+        console.log('numero: '+numero)
+        
+      
+       
 
         
 
@@ -114,10 +128,10 @@ class OficioForm extends Component {
 
             <form onSubmit={handleSubmit}>
                 <div className='box-body'>
-                    <Field name='numero' component={LabelAndInput} readOnly={readOnly}
-                        label='Número' cols='12 2' />
+                     <Field name='numero' component={LabelAndLabel} readOnly={readOnly}
+                        label='Número' cols='12 2' valor={numero} />
 
-                    <Field name='data' component={LabelAndInput} readOnly={readOnly}
+                    <Field name='dataMissao' component={LabelAndInput} readOnly={readOnly}
                         label='Data da Missão' cols='12 3' placeholder='Informe a data da missão' />
 
                     <Field name='assunto' component={LabelAndSelect} readOnly={readOnly}
@@ -161,6 +175,7 @@ OficioForm = reduxForm({ form: 'oficioForm', destroyOnUnmount: false })(OficioFo
 
 const selector = formValueSelector('oficioForm')
 const mapStateToProps = state => ({
+    numero: selector(state, 'numero'),
     assunto: selector(state, 'assunto'),
     conteudo: selector(state, 'conteudo'),
     status: selector(state, 'status'),
@@ -169,7 +184,8 @@ const mapStateToProps = state => ({
     //tabUpdate: state.tab.visible.tabUpdate,
     // tabDelete: state.tab.visible.tabDelete,
     tiposOficios: state.oficio.tiposOficios,
-    user: state.auth.user
+    user: state.auth.user,
+   
 
 
 })
@@ -180,6 +196,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     updateTipoOficio,
     updateSugestoes,
     updateUser,
-    updateStatusAtual
+    updateStatusAtual,
+    
+    
 }, dispatch)
 export default connect(mapStateToProps, mapDispatchToProps)(OficioForm)

@@ -14,7 +14,7 @@ class OficioList extends Component {
         const data = new Date(date)
         const options = {
             year: 'numeric',
-            month: 'long',
+            month: 'numeric',
             day: 'numeric',
             hour: 'numeric',
             minute: 'numeric',
@@ -26,13 +26,14 @@ class OficioList extends Component {
 
     renderRows() {
         const list = this.props.list || []
-        const listByNumero = list.sort(sortBy('-numero'))
+        const listByNumero = list.sort(sortBy('-data'))
         return listByNumero.map(oficio => (
 
             <tr key={oficio._id}>
                 <td>{oficio.numero}</td>
                 <td>{this.formatDate(oficio.data)}</td>
                 <td>{oficio.assunto}</td>
+                <td>{oficio.destino}</td>
                 <td>{oficio.status.sort(sortBy('-dataHora'))[0].status}</td>
                 <td>
                     <button className='btn btn-success' onClick={() => this.props.showUpdate(oficio)}>
@@ -41,9 +42,9 @@ class OficioList extends Component {
                     <button className='btn btn-warning' onClick={() => this.props.showUpdate(oficio)}>
                         <i className='fa fa-pencil'></i>
                     </button>
-                    <button className='btn btn-danger' onClick={() => this.props.showDelete(oficio)}>
-                        <i className='fa fa-trash-o'></i>
-                    </button>
+                   {/*<button className='btn btn-danger' onClick={() => this.props.showDelete(oficio)}>
+                        <i className='fa fa-trash-o'></i> 
+        </button>*/}
                 </td>
             </tr>
         ))
@@ -56,8 +57,9 @@ class OficioList extends Component {
                     <thead>
                         <tr>
                             <th>Número</th>
-                            <th>Data</th>
+                            <th>Data Ofício</th>
                             <th>Tipo</th>
+                            <th>Destino</th>
                             <th>Status Atual</th>
                             <th className='table-actions'>Ações</th>
                         </tr>

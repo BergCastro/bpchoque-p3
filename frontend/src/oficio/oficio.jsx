@@ -11,13 +11,16 @@ import TabHeader from '../common/tab/tabHeader'
 import TabContent from '../common/tab/tabContent'
 import { init, create, update, remove } from './oficioActions'
 
+
 import List from './oficioList'
 import Form from './oficioForm'
 
 class Oficio extends Component {
 
     componentWillMount() {
+        
         this.props.init()
+        
     }
 
     render() {
@@ -57,6 +60,6 @@ class Oficio extends Component {
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-    init, create, update, remove
+    init, create, update, remove,
 }, dispatch)
 export default connect(null, mapDispatchToProps)(Oficio)

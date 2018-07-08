@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import { getSummary } from './dashboardActions'
+
 import ContentHeader from '../common/template/contentHeader'
 import Content from '../common/template/content'
 import ValueBox from  '../common/widget/valueBox'
@@ -12,6 +13,7 @@ class Dashboard extends Component {
 
     componentWillMount() {
         this.props.getSummary()
+        
     }
 
     render() {

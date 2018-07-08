@@ -5,9 +5,8 @@ export default props => (
     <Grid cols={props.cols}>
         <div className='form-group'>
             <label htmlFor={props.name}>{props.label}</label>
-            <input {...props.input} className='form-control'
-                 placeholder={props.placeholder}
-                 readOnly={props.readOnly} type={props.type} disabled={props.disabled} />
+            <label {...props.input} className='form-control'
+                 >{props.valor}</label>
         </div>
     </Grid>
 )

@@ -26,6 +26,8 @@ module.exports = function (server) {
     const Oficios = require('../api/oficios/oficiosService')
     Oficios.register(protectedApi, '/oficios')
 
+  
+
    
 
     

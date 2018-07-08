@@ -1,15 +1,14 @@
 import axios from 'axios'
+import consts from '../consts'
 import { toastr } from 'react-redux-toastr'
 import { initialize } from 'redux-form'
 import { showTabs, selectTab } from '../common/tab/tabActions'
 
 
 
-
-
-const BASE_URL = 'http://localhost:3003/api'
+const BASE_URL = consts.API_URL
 const INITIAL_VALUES = {
-
+    numero: '',
     conteudo: '',
     assunto: '',
     referencia: '',
@@ -17,10 +16,8 @@ const INITIAL_VALUES = {
     local: '',
     anexo: '',
     user: '',
+    dataMissao: '',
     statusAtual: 'Não iniciado'
-
-
-
 }
 
 export const GET_OFICIOS = 'GET_OFICIOS'
@@ -30,6 +27,7 @@ export const UPDATE_CONTEUDO = 'UPDATE_CONTEUDO'
 export const UPDATE_TIPO_OFICIO = 'UPDATE_TIPO_OFICIO'
 export const UPDATE_SUGESTOES_OFICIO = 'UPDATE_SUGESTOES_OFICIO'
 export const UPDATE_USER = 'UPDATE_USER'
+export const UPDATE_NUMERO = 'UPDATE_NUMERO'
 export const UPDATE_STATUS_ATUAL = 'UPDATE_STATUS_ATUAL'
 
 
@@ -82,16 +80,24 @@ export function updateSugestoes(value) {
 }
 
 export function updateUser(value) {
-    
+
     return {
         type: UPDATE_USER,
         payload: value
     }
 }
 
+export function updateNumero(value) {
+
+    return {
+        type: UPDATE_NUMERO,
+        payload: value
+    }
+}
+
 export function updateStatusAtual(value, user) {
     const newStatus = {
-            
+
         status: value,
         dataHora: Date.now(),
         responsavel: user
@@ -99,7 +105,7 @@ export function updateStatusAtual(value, user) {
 
     return {
         type: UPDATE_STATUS_ATUAL,
-        payload: newStatus       
+        payload: newStatus
 
     }
 }
@@ -134,18 +140,51 @@ export function remove(values) {
 
 function submit(values, method) {
     return dispatch => {
-        //const valores = {...values,
-        //              efetivoDescricao: values.efetivoDescricao.toString('html')}
+        
         const id = values._id ? values._id : ''
-        axios[method](`${BASE_URL}/oficios/${id}`, values)
-            .then(resp => {
-                toastr.success('Sucesso', 'Operação Realizada com sucesso.')
-                dispatch(init())
+        let countOficio = null
+        if(method === 'post'){
+            axios.get(`${BASE_URL}/oficios/count`).then((res) => {
+                        
+                countOficio = res.data.value
+                const newValues = {
+                    ...values,
+                    numero: countOficio + 1
+                   
+                }
+    
+                axios[method](`${BASE_URL}/oficios/${id}`, newValues)
+                .then(resp => {
+                    toastr.success(`Oficio ${countOficio + 1} salvado`, 'Operação Realizada com sucesso.')
+                    dispatch(init())
+    
+                })
+                .catch(e => {
+                   
+                    toastr.warning('Um erro ocorreu!', 'Pode já ter sido deletado.')
+                    dispatch(init())
+                })
+    
             })
-            .catch(e => {
-                console.log('event: ' + e)
-                e.response.data.errors.forEach(error => toastr.error('Erro', error))
-            })
+        }else{
+            axios[method](`${BASE_URL}/oficios/${id}`, values)
+                .then(resp => {
+                    toastr.success(`Oficio ${values.numero} salvado`, 'Operação Realizada com sucesso.')
+                    dispatch(init())
+    
+                })
+                .catch(e => {
+                   
+                    toastr.warning('Um erro ocorreu!', 'Pode já ter sido deletado.')
+                    dispatch(init())
+                })
+        }
+       
+        
+        
+        
+
+
     }
 }
 
