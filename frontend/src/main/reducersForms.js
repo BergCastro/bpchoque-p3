@@ -171,7 +171,7 @@ export default formReducer.plugin({
             referencia: action.payload.referencia,
             anexo: action.payload.anexo,
             destino: action.payload.destino,
-            conteudo: action.payload.horaQuartel,
+            conteudo: action.payload.conteudo,
             
             
             // <----- clear password value
