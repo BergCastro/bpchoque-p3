@@ -112,8 +112,7 @@ export function updateStatusAtual(value, user) {
 
 
 export function create(values) {
-    // const user = state.auth.user
-    console.log('values: ' + JSON.stringify(values))
+    //console.log('values: ' + JSON.stringify(values))
     const valor = {
         ...values,
         statusAtual: 'Aberto',
@@ -180,10 +179,6 @@ function submit(values, method) {
                 })
         }
        
-        
-        
-        
-
 
     }
 }
@@ -199,8 +194,7 @@ export function showUpdate(oficio) {
 }
 
 export function showDelete(oficio) {
-    //const oficioValue = {...oficio,
-    //    efetivoDescricao: RichTextEditor.createValueFromString(oficio.efetivoDescricao, 'html')}
+   
     return [
         showTabs('tabDelete'),
         selectTab('tabDelete'),
@@ -209,8 +203,7 @@ export function showDelete(oficio) {
 }
 
 export function init() {
-    //const numero = axios.get(`${BASE_URL}/oficios/count`)
-
+    
     return [
         showTabs('tabList', 'tabCreate'),
         selectTab('tabList'),

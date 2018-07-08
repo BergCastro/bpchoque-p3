@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 import sortBy from 'sort-by'
 
 class OficioStatusList extends Component {

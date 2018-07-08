@@ -53,11 +53,11 @@ class OficioForm extends Component {
     
         
     
-    componentWillMount() {
+    componentDidMount() {
         
         const { conteudo, user, updateUser } = this.props
-        updateUser(user.cargo+" "+user.nomeGuerra)
         
+        updateUser(user.cargo+" "+user.nomeGuerra)
 
 
         this.setState({ value: RichTextEditor.createValueFromString(conteudo, 'html') })
@@ -101,6 +101,22 @@ class OficioForm extends Component {
 
     }
 
+    formatNumero(number) {
+        const length = number.length
+        switch (length) {
+            case 1:
+                return '000' + number
+            case 2:
+                return '00' + number                
+            case 3:
+                return '0' + number
+            default: 
+                return number
+            
+        }
+
+    }
+
 
 
 
@@ -113,23 +129,16 @@ class OficioForm extends Component {
             return !statusUltilizados.includes(item); 
           })
         statusDisponiveis.push(statusAtual)
+        
         const statusCombo = statusDisponiveis || []
 
-        console.log('numero: '+numero)
         
-      
-       
-
-        
-
-
-
         return (
 
             <form onSubmit={handleSubmit}>
                 <div className='box-body'>
                      <Field name='numero' component={LabelAndLabel} readOnly={readOnly}
-                        label='Número' cols='12 2' valor={numero} />
+                        label='Número' cols='12 2' valor={this.formatNumero(numero)} />
 
                     <Field name='dataMissao' component={LabelAndInput} readOnly={readOnly}
                         label='Data da Missão' cols='12 3' placeholder='Informe a data da missão' />

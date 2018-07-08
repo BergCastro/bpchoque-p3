@@ -23,6 +23,21 @@ class OficioList extends Component {
 
         return data.toLocaleDateString('pt-BR', options)
     }
+    formatNumero(number) {
+        const length = number.length
+        switch (length) {
+            case 1:
+                return '000' + number
+            case 2:
+                return '00' + number                
+            case 3:
+                return '0' + number
+            default: 
+                return number
+            
+        }
+
+    }
 
     renderRows() {
         const list = this.props.list || []
@@ -30,7 +45,7 @@ class OficioList extends Component {
         return listByNumero.map(oficio => (
 
             <tr key={oficio._id}>
-                <td>{oficio.numero}</td>
+                <td>{this.formatNumero(oficio.numero)}</td>
                 <td>{this.formatDate(oficio.data)}</td>
                 <td>{oficio.assunto}</td>
                 <td>{oficio.destino}</td>
@@ -42,7 +57,7 @@ class OficioList extends Component {
                     <button className='btn btn-warning' onClick={() => this.props.showUpdate(oficio)}>
                         <i className='fa fa-pencil'></i>
                     </button>
-                   {/*<button className='btn btn-danger' onClick={() => this.props.showDelete(oficio)}>
+                    {/*<button className='btn btn-danger' onClick={() => this.props.showDelete(oficio)}>
                         <i className='fa fa-trash-o'></i> 
         </button>*/}
                 </td>
