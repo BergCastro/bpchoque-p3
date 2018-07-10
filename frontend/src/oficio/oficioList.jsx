@@ -45,7 +45,7 @@ class OficioList extends Component {
 
     renderRows() {
         const list = this.props.list || []
-        const listByNumero = list.sort(sortBy('-data'))
+        const listByNumero = list.sort(sortBy('-numero'))
         return listByNumero.map(oficio => (
 
             <tr key={oficio._id} style={oficio.statusAtual === 'Cancelado' ? this.styleFontRed: {color: 'black'} }>

@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import IF from '../common/operator/if'
+
 
 import ContentHeader from '../common/template/contentHeader'
 import Content from '../common/template/content'
@@ -16,14 +18,30 @@ import List from './oficioList'
 import Form from './oficioForm'
 
 class Oficio extends Component {
-
-    componentWillMount() {
-        
-        this.props.init()
-        
+    state = {
+        loading: false
     }
 
+    updateList = (event) => {
+        event.preventDefault()
+       
+        this.props.init()
+    }
+
+    
+
+    componentWillMount() {
+
+        this.props.init()
+
+    }
+    styleButtonUpdate = {
+        marginTop: '7px'
+    }
+   
+
     render() {
+        const { tabSelected } = this.props
         return (
             <div>
                 <ContentHeader title='Oficios' small='Cadastro' />
@@ -34,6 +52,17 @@ class Oficio extends Component {
                             <TabHeader label='Incluir' icon='plus' target='tabCreate' />
                             <TabHeader label='Alterar' icon='pencil' target='tabUpdate' />
                             <TabHeader label='Excluir' icon='trash-o' target='tabDelete' />
+                            <IF test={tabSelected === 'tabList'}>
+                            <button type="button"
+                                    class="btn btn-link" 
+                                    style={this.styleButtonUpdate}
+                                    onClick={this.updateList}>Atualizar</button>
+                            </IF>
+                                
+                            
+                            
+                            
+
                         </TabsHeader>
                         <TabsContent>
                             <TabContent id='tabList'>
@@ -58,8 +87,10 @@ class Oficio extends Component {
         )
     }
 }
-
+const mapStateToProps = state => ({
+     tabSelected: state.tab.selected
+})
 const mapDispatchToProps = dispatch => bindActionCreators({
     init, create, update, remove,
 }, dispatch)
-export default connect(null, mapDispatchToProps)(Oficio)
+export default connect(mapStateToProps, mapDispatchToProps)(Oficio)
