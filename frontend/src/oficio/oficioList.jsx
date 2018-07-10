@@ -38,18 +38,22 @@ class OficioList extends Component {
         }
 
     }
+    styleFontRed = {
+        color: 'red',
+        //fontWeight: 'bold'
+    }
 
     renderRows() {
         const list = this.props.list || []
         const listByNumero = list.sort(sortBy('-data'))
         return listByNumero.map(oficio => (
 
-            <tr key={oficio._id}>
-                <td>{this.formatNumero(oficio.numero)}</td>
+            <tr key={oficio._id} style={oficio.statusAtual === 'Cancelado' ? this.styleFontRed: {color: 'black'} }>
+                <td>{this.formatNumero(oficio.numero+"")}</td>
                 <td>{this.formatDate(oficio.data)}</td>
                 <td>{oficio.assunto}</td>
                 <td>{oficio.destino}</td>
-                <td>{oficio.status.sort(sortBy('-dataHora'))[0].status}</td>
+                <td>{oficio.statusAtual}</td>
                 <td>
                     <button className='btn btn-success' onClick={() => this.props.showUpdate(oficio)}>
                         <i className='glyphicon glyphicon-search'></i>

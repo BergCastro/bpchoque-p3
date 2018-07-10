@@ -139,53 +139,27 @@ export function remove(values) {
 
 function submit(values, method) {
     return dispatch => {
-        
-        const id = values._id ? values._id : ''
-        let countOficio = null
-        if(method === 'post'){
-            axios.get(`${BASE_URL}/oficios/count`).then((res) => {
-                        
-                countOficio = res.data.value
-                const newValues = {
-                    ...values,
-                    numero: countOficio + 1
-                   
-                }
-    
-                axios[method](`${BASE_URL}/oficios/${id}`, newValues)
-                .then(resp => {
-                    toastr.success(`Oficio ${countOficio + 1} salvado`, 'Operação Realizada com sucesso.')
-                    dispatch(init())
-    
-                })
-                .catch(e => {
-                   
-                    toastr.warning('Um erro ocorreu!', 'Pode já ter sido deletado.')
-                    dispatch(init())
-                })
-    
-            })
-        }else{
-            axios[method](`${BASE_URL}/oficios/${id}`, values)
-                .then(resp => {
-                    toastr.success(`Oficio ${values.numero} salvado`, 'Operação Realizada com sucesso.')
-                    dispatch(init())
-    
-                })
-                .catch(e => {
-                   
-                    toastr.warning('Um erro ocorreu!', 'Pode já ter sido deletado.')
-                    dispatch(init())
-                })
-        }
-       
 
+        const id = values._id ? values._id : ''
+
+        axios[method](`${BASE_URL}/oficios/${id}`, values)
+            .then(resp => {
+                toastr.success(`Sucesso`, 'Operação Realizada com sucesso.')
+                dispatch(init())
+
+            })
+            .catch(e => {
+
+                toastr.warning('Um erro ocorreu!', 'Pode já ter sido deletado.')
+                dispatch(init())
+
+
+            })
     }
 }
 
 export function showUpdate(oficio) {
-    //const oficioValue = {...oficio,
-    //efetivoDescricao: RichTextEditor.createValueFromString(oficio.efetivoDescricao, 'html')}
+    
     return [
         showTabs('tabUpdate'),
         selectTab('tabUpdate'),
@@ -194,7 +168,7 @@ export function showUpdate(oficio) {
 }
 
 export function showDelete(oficio) {
-   
+
     return [
         showTabs('tabDelete'),
         selectTab('tabDelete'),
@@ -203,14 +177,14 @@ export function showDelete(oficio) {
 }
 
 export function init() {
-    
+
     return [
         showTabs('tabList', 'tabCreate'),
         selectTab('tabList'),
         getList(),
         getTiposOficios(),
         initialize('oficioForm', INITIAL_VALUES),
-        getCount()
+       // getCount()
 
     ]
 }

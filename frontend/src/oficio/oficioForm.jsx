@@ -138,7 +138,7 @@ class OficioForm extends Component {
             <form onSubmit={handleSubmit}>
                 <div className='box-body'>
                      <Field name='numero' component={LabelAndLabel} readOnly={readOnly}
-                        label='Número' cols='12 2' valor={this.formatNumero(numero)} />
+                        label='Número' cols='12 2' valor={this.formatNumero(numero+"")} />
 
                     <Field name='dataMissao' component={LabelAndInput} readOnly={readOnly}
                         label='Data da Missão' cols='12 3' placeholder='Informe a data da missão' />
