@@ -10,6 +10,7 @@
     "ionicons": "^3.0.0",
     "jquery": "2.2.3",
     "match-sorter": "^2.2.3",
+    "pdfmake": "^0.1.37",
     "react": "16.2.0",
     "react-autosuggest": "^9.3.2",
     "react-dom": "16.2.0",

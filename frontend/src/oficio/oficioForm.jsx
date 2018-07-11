@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { reduxForm, Field, formValueSelector } from 'redux-form'
+import { docDefinition } from './oficioPdfConfig'
+import pdfMake from 'pdfmake/build/pdfmake.js'
+import pdfFonts from "pdfmake/build/vfs_fonts"
 
 
 import {
@@ -12,7 +15,7 @@ import {
     updateSugestoes,
     updateUser,
     updateStatusAtual,
-    
+
 } from './oficioActions'
 //import {updateControle} from '../controleDocumento/controleDocumentoActions'
 import LabelAndInput from '../common/form/labelAndInput'
@@ -36,7 +39,7 @@ class OficioForm extends Component {
     ]
 
     statusList = [
-        
+
         'Aberto',
         'Em transito',
         'Arquivado',
@@ -49,21 +52,21 @@ class OficioForm extends Component {
     }
 
 
-    
-        
-    
+
+
+
     componentDidMount() {
-        
+
         const { conteudo, user, updateUser } = this.props
-        
-        updateUser(user.cargo+" "+user.nomeGuerra)
+
+        updateUser(user.cargo + " " + user.nomeGuerra)
 
 
         this.setState({ value: RichTextEditor.createValueFromString(conteudo, 'html') })
-        
-        
-       
-      
+
+
+
+
 
     }
 
@@ -85,10 +88,10 @@ class OficioForm extends Component {
 
     }
     updateStatus = (event) => {
-        const { user, updateStatusAtual} = this.props
+        const { user, updateStatusAtual } = this.props
         const value = event.target.value
-        
-        updateStatusAtual(value, user.cargo+" "+user.nomeGuerra)
+
+        updateStatusAtual(value, user.cargo + " " + user.nomeGuerra)
     }
 
 
@@ -106,38 +109,54 @@ class OficioForm extends Component {
             case 1:
                 return '000' + number
             case 2:
-                return '00' + number                
+                return '00' + number
             case 3:
                 return '0' + number
-            default: 
+            default:
                 return number
-            
+
         }
 
+    }
+
+    handlePdfDownload = () => {
+        pdfMake.vfs = pdfFonts.pdfMake.vfs
+        pdfMake.createPdf(this.docDefinition()).download('ope.pdf')
+
+    }
+
+    handlePdfPrint = () => {
+        pdfMake.vfs = pdfFonts.pdfMake.vfs
+        pdfMake.createPdf(this.docDefinition()).print()
+    }
+
+    handlePdfOpen = () => {
+        pdfMake.vfs = pdfFonts.pdfMake.vfs
+        pdfMake.createPdf(this.docDefinition()).open();
     }
 
 
 
 
     render() {
-        const { handleSubmit, readOnly, tiposOficios, status, user, statusAtual, numero} = this.props
+        const { handleSubmit, readOnly, tiposOficios, status, user, statusAtual, numero } = this.props
         const tiposNomes = tiposOficios.map((tipo) => tipo.nome)
         const statusOficio = status || []
         const statusUltilizados = statusOficio.map((stat) => stat.status) || []
-        const statusDisponiveis = this.statusList.filter(function(item) {
-            return !statusUltilizados.includes(item); 
-          })
+        const statusDisponiveis = this.statusList.filter(function (item) {
+            return !statusUltilizados.includes(item);
+        })
         statusDisponiveis.push(statusAtual)
-        
+
         const statusCombo = statusDisponiveis || []
 
-        
+
         return (
 
             <form onSubmit={handleSubmit}>
                 <div className='box-body'>
-                     <Field name='numero' component={LabelAndLabel} readOnly={readOnly}
-                        label='Número' cols='12 2' valor={this.formatNumero(numero+"")} />
+                    <Field name='numero' component={LabelAndLabel} readOnly={readOnly}
+                        label='Número' cols='12 2' valor={this.formatNumero(numero + "")} />
 
                     <Field name='dataMissao' component={LabelAndInput} readOnly={readOnly}
                         label='Data da Missão' cols='12 3' placeholder='Informe a data da missão' />
@@ -173,6 +192,8 @@ class OficioForm extends Component {
                     </button>
                     <button type='button' className='btn btn-default'
                         onClick={this.props.init}>Cancelar</button>
+                    <button type='button' className='btn btn-default'
+                        onClick={this.handlePdfOpen}>Imprimir</button>
                 </div>
             </form>
         )
@@ -193,7 +214,7 @@ const mapStateToProps = state => ({
     // tabDelete: state.tab.visible.tabDelete,
     tiposOficios: state.oficio.tiposOficios,
     user: state.auth.user,
-   
+
 
 
 })
@@ -205,7 +226,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     updateSugestoes,
     updateUser,
     updateStatusAtual,
-    
-    
+
+
 }, dispatch)
 export default connect(mapStateToProps, mapDispatchToProps)(OficioForm)
