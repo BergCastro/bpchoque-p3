@@ -54,7 +54,7 @@ class Oficio extends Component {
                             <TabHeader label='Excluir' icon='trash-o' target='tabDelete' />
                             <IF test={tabSelected === 'tabList'}>
                             <button type="button"
-                                    class="btn btn-link" 
+                                    className="btn btn-link" 
                                     style={this.styleButtonUpdate}
                                     onClick={this.updateList}>Atualizar</button>
                             </IF>
