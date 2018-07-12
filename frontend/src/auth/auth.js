@@ -33,7 +33,7 @@ class Auth extends Component {
             <div className="login-box">
                 
                 
-                <div className="login-logo"><b>SAS BPChoque</b> </div>
+                <div className="login-logo"><b>SYSChoque</b> </div>
                 <div className="login-box-body">
                     <p className="login-box-msg">Bem vindo!</p>
                     <form onSubmit={handleSubmit(v => this.onSubmit(v))}>

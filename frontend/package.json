@@ -5,6 +5,7 @@
   "dependencies": {
     "admin-lte": "2.3.11",
     "axios": "0.17.1",
+    "dom-to-image": "^2.6.0",
     "draft-js": "^0.10.4",
     "font-awesome": "4.7.0",
     "ionicons": "^3.0.0",

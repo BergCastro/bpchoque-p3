@@ -61,7 +61,6 @@ class OficioForm extends Component {
 
         updateUser(user.cargo + " " + user.nomeGuerra)
 
-
         this.setState({ value: RichTextEditor.createValueFromString(conteudo, 'html') })
 
 
@@ -118,31 +117,33 @@ class OficioForm extends Component {
         }
 
     }
+   
 
     handlePdfDownload = () => {
         pdfMake.vfs = pdfFonts.pdfMake.vfs
-        pdfMake.createPdf(this.docDefinition()).download('ope.pdf')
+        pdfMake.createPdf(docDefinition()).download('ope.pdf')
 
     }
 
     handlePdfPrint = () => {
         pdfMake.vfs = pdfFonts.pdfMake.vfs
-        pdfMake.createPdf(this.docDefinition()).print()
+        pdfMake.createPdf(docDefinition()).print()
     }
 
     handlePdfOpen = () => {
+        const { oficio } = this.props
         pdfMake.vfs = pdfFonts.pdfMake.vfs
-        pdfMake.createPdf(this.docDefinition()).open();
+        pdfMake.createPdf(docDefinition(oficio)).open();
     }
-
 
 
 
     render() {
-        const { handleSubmit, readOnly, tiposOficios, status, user, statusAtual, numero } = this.props
+        const { handleSubmit, readOnly, tiposOficios, status, user, statusAtual, numero, oficio } = this.props
         const tiposNomes = tiposOficios.map((tipo) => tipo.nome)
         const statusOficio = status || []
         const statusUltilizados = statusOficio.map((stat) => stat.status) || []
+        console.log('oficio: '+oficio)
         const statusDisponiveis = this.statusList.filter(function (item) {
             return !statusUltilizados.includes(item);
         })
@@ -209,6 +210,7 @@ const mapStateToProps = state => ({
     conteudo: selector(state, 'conteudo'),
     status: selector(state, 'status'),
     statusAtual: selector(state, 'statusAtual'),
+    oficio: selector(state, 'numero', 'assunto', 'referencia', 'conteudo', 'data', 'destino'),
 
     //tabUpdate: state.tab.visible.tabUpdate,
     // tabDelete: state.tab.visible.tabDelete,
